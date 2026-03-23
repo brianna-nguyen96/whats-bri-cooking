@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Recipe Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #FFFBF5;
+  --surface:    #FFFFFF;
+  --tomato:     #E8462A;
+  --tomato-lt:  #FDE8E4;
+  --mustard:    #E8A020;
+  --mustard-lt: #FEF3DC;
+  --teal:       #2A9D8F;
+  --teal-lt:    #D6F2EE;
+  --plum:       #7B4FA6;
+  --plum-lt:    #EFE4FA;
+  --ink:        #1A1208;
+  --ink-mid:    #5C4A30;
+  --ink-muted:  #9C8A70;
+  --border:     #EDE0CC;
+  --r:          16px;
+  --r-sm:       10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+body::before{content:'';display:block;height:6px;background:repeating-linear-gradient(90deg,var(--tomato) 0 40px,var(--mustard) 40px 80px,var(--teal) 80px 120px,var(--plum) 120px 160px)}
+
+/* ── LOCK ── */
+#lock{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2rem}
+.lock-card{background:var(--surface);border:2px solid var(--border);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:360px;text-align:center;box-shadow:0 8px 40px rgba(232,70,42,.08)}
+.lock-card .icon{font-size:3rem;margin-bottom:1rem}
+.lock-card h1{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:.3rem}
+.lock-card p{font-size:.85rem;color:var(--ink-muted);margin-bottom:1.5rem}
+.lock-card input{width:100%;padding:.75rem 1rem;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:1rem;text-align:center;letter-spacing:.15em;outline:none;background:var(--bg);color:var(--ink);margin-bottom:.75rem;transition:border-color .15s}
+.lock-card input:focus{border-color:var(--tomato)}
+.lock-card button{width:100%;padding:.75rem;background:var(--tomato);color:#fff;border:none;border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:opacity .15s}
+.lock-card button:hover{opacity:.88}
+.lock-err{font-size:.8rem;color:var(--tomato);min-height:1.1rem;margin-top:.25rem}
+.lock-hint{font-size:.78rem;color:var(--ink-muted);max-width:280px;text-align:center;line-height:1.6}
+.lock-hint strong{color:var(--ink-mid)}
+
+/* ── SUPABASE CONFIG BANNER ── */
+#config-banner{display:none;background:var(--mustard-lt);border:2px solid var(--mustard);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.875rem;color:#7A5010;line-height:1.6}
+#config-banner strong{font-weight:700}
+#config-banner code{background:rgba(232,160,32,.2);padding:1px 5px;border-radius:4px;font-family:monospace;font-size:.82rem}
+
+/* ── APP ── */
+#app{display:none}
+header{background:var(--surface);border-bottom:2px solid var(--border);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:.6rem}
+.logo-icon{width:42px;height:42px;background:var(--tomato);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.logo h1{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--ink);line-height:1}
+.logo span{font-size:.75rem;color:var(--ink-muted)}
+.header-actions{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+
+/* VIEW TOGGLE */
+.view-toggle{display:flex;background:var(--bg);border:2px solid var(--border);border-radius:99px;overflow:hidden}
+.vtab{padding:.4rem .9rem;font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:700;cursor:pointer;border:none;background:transparent;color:var(--ink-muted);transition:all .15s}
+.vtab.active{background:var(--surface);color:var(--ink);border-radius:99px;margin:2px}
+
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.55rem 1.1rem;border-radius:99px;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:transform .1s,opacity .15s;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn-red{background:var(--tomato);color:#fff}
+.btn-red:hover{opacity:.88}
+.btn-outline{background:transparent;border-color:var(--border);color:var(--ink-mid)}
+.btn-outline:hover{border-color:var(--ink-muted);background:var(--bg)}
+.btn-teal{background:var(--teal);color:#fff}
+.btn-teal:hover{opacity:.88}
+.btn-sm{padding:.35rem .8rem;font-size:.78rem}
+
+main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
+
+/* STATS */
+.hero-stats{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem}
+.hstat{flex:1;min-width:110px;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;position:relative;overflow:hidden}
+.hstat::after{content:attr(data-emoji);position:absolute;right:-.2rem;bottom:-.4rem;font-size:2.8rem;opacity:.12;line-height:1}
+.hstat-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-muted);margin-bottom:.2rem}
+.hstat-val{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--ink)}
+
+/* CONTROLS */
+.controls{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.25rem;align-items:center}
+.search-wrap{position:relative;flex:1;min-width:200px}
+.search-wrap svg{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ink-muted);fill:none;stroke-width:2.2;pointer-events:none}
+.search-wrap input{width:100%;padding:.65rem .75rem .65rem 2.3rem;border:2px solid var(--border);border-radius:99px;font-family:'Nunito',sans-serif;font-size:.875rem;background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s}
+.search-wrap input:focus{border-color:var(--tomato)}
+.filter-select{padding:.6rem 1rem;border:2px solid var(--border);border-radius:99px;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:600;background:var(--surface);color:var(--ink);outline:none;cursor:pointer}
+
+/* PILLS */
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.pill{padding:.35rem 1rem;border-radius:99px;font-size:.8rem;font-weight:700;cursor:pointer;border:2px solid var(--border);background:var(--surface);color:var(--ink-muted);transition:all .15s}
+.pill:hover{border-color:var(--ink-muted);color:var(--ink)}
+.pill.active{background:var(--tomato-lt);border-color:var(--tomato);color:var(--tomato)}
+
+/* CATEGORY CHIPS */
+.cat-chip{font-size:.7rem;font-weight:700;padding:.25rem .65rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
+.chip-Breakfast{background:var(--teal-lt);color:#1A6B60}
+.chip-Lunch{background:var(--mustard-lt);color:#7A5010}
+.chip-Dinner{background:var(--plum-lt);color:#5A2A86}
+.chip-Snack{background:var(--tomato-lt);color:#A82A14}
+.chip-Dessert{background:#FDE8F8;color:#8A1A6A}
+.chip-Other{background:#EEF0E8;color:#4A5230}
+
+/* ── CARD GRID VIEW ── */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
+.rcard{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
+.rcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,18,8,.1)}
+.rcard-photo{width:100%;height:200px;object-fit:cover;display:block}
+.rcard-nophoto{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;font-size:2.5rem;background:linear-gradient(135deg,var(--mustard-lt),var(--tomato-lt))}
+.rcard-nophoto span{font-size:.8rem;color:var(--ink-muted);font-weight:600}
+.rcard-body{padding:1.1rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.6rem}
+.rcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
+.rcard-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:var(--ink);line-height:1.2}
+.rcard-meta{display:flex;justify-content:space-between;align-items:center}
+.rcard-stars{font-size:.9rem;letter-spacing:1px}
+.rcard-date{font-size:.75rem;color:var(--ink-muted)}
+.rcard-notes{font-size:.83rem;color:var(--ink-mid);line-height:1.65;border-top:2px dashed var(--border);padding-top:.65rem;flex:1;font-style:italic}
+.rcard-actions{display:flex;gap:.5rem;padding:.75rem 1.25rem;border-top:2px solid var(--border);background:var(--bg)}
+.rcard-actions button{font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:99px;cursor:pointer;font-family:'Nunito',sans-serif;border:2px solid var(--border);background:transparent;color:var(--ink-mid);transition:all .12s}
+.rcard-actions button:hover{background:var(--surface);border-color:var(--ink-muted)}
+.rcard-actions .del{color:#C0392B;border-color:#FBDAD6}
+.rcard-actions .del:hover{background:#FEF0EE}
+
+/* ── BLOG FEED VIEW ── */
+#blog-feed{display:none}
+.blog-post{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:2.5rem;transition:box-shadow .18s}
+.blog-post:hover{box-shadow:0 8px 32px rgba(26,18,8,.08)}
+.blog-hero{width:100%;max-height:480px;object-fit:cover;display:block}
+.blog-nophoto{width:100%;height:220px;display:flex;align-items:center;justify-content:center;font-size:4rem;background:linear-gradient(135deg,var(--mustard-lt),var(--tomato-lt))}
+.blog-body{padding:2rem 2.5rem}
+.blog-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.75rem}
+.blog-date{font-size:.78rem;color:var(--ink-muted)}
+.blog-title{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:.75rem}
+.blog-stars{font-size:1rem;letter-spacing:2px;margin-bottom:1.25rem}
+.blog-divider{border:none;border-top:2px dashed var(--border);margin:1.25rem 0}
+.blog-notes-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-muted);margin-bottom:.5rem}
+.blog-notes{font-size:1rem;line-height:1.9;color:var(--ink-mid);white-space:pre-wrap}
+.blog-footer{padding:1rem 2.5rem;border-top:2px solid var(--border);background:var(--bg);display:flex;gap:.5rem}
+
+/* EMPTY */
+.empty{grid-column:1/-1;text-align:center;padding:5rem 1rem;color:var(--ink-muted)}
+.empty .big{font-size:3.5rem;margin-bottom:1rem}
+.empty p{font-size:.95rem}
+
+/* LOADING */
+.loading{text-align:center;padding:4rem 1rem;color:var(--ink-muted)}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--tomato);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── MODAL ── */
+.overlay{position:fixed;inset:0;background:rgba(26,18,8,.5);display:flex;align-items:center;justify-content:center;z-index:500;padding:1rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--surface);border-radius:24px;padding:2rem;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;transform:translateY(20px);transition:transform .2s;border:2px solid var(--border)}
+.overlay.open .modal{transform:translateY(0)}
+.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.modal-hdr h2{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700}
+.close-btn{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:transparent;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);transition:background .12s}
+.close-btn:hover{background:var(--bg)}
+.field{margin-bottom:1.1rem}
+.field label{display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mid);margin-bottom:.4rem}
+.field input,.field textarea,.field select{width:100%;padding:.7rem .9rem;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:.9rem;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--tomato)}
+.field textarea{resize:vertical;min-height:110px;line-height:1.65}
+.photo-drop{border:2.5px dashed var(--border);border-radius:var(--r-sm);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:var(--bg)}
+.photo-drop:hover,.photo-drop.drag{border-color:var(--tomato);background:var(--tomato-lt)}
+.photo-drop input{display:none}
+.photo-prev{width:100%;max-height:200px;object-fit:cover;border-radius:var(--r-sm);display:none;margin-top:.75rem}
+.photo-txt{font-size:.85rem;color:var(--ink-muted);font-weight:600}
+.upload-status{font-size:.8rem;margin-top:.5rem;min-height:1.1rem}
+.star-picker{display:flex;gap:4px}
+.star-picker button{font-size:1.6rem;background:none;border:none;cursor:pointer;padding:0;line-height:1;transition:transform .1s}
+.star-picker button:hover{transform:scale(1.2)}
+.modal-foot{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:2px solid var(--border)}
+
+/* PW PANEL */
+#pw-panel{display:none;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:2rem;max-width:420px}
+#pw-panel h3{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:1rem}
+#pw-panel input{width:100%;padding:.6rem .85rem;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:.875rem;margin-bottom:.75rem;outline:none;background:var(--bg);color:var(--ink);transition:border-color .15s}
+#pw-panel input:focus{border-color:var(--tomato)}
+#pw-msg{font-size:.8rem;color:var(--teal);min-height:1rem}
+
+@media(max-width:620px){
+  header{padding:1rem}
+  main{padding:1.25rem 1rem 4rem}
+  .grid{grid-template-columns:1fr}
+  .blog-body,.blog-footer{padding-left:1.25rem;padding-right:1.25rem}
+  .blog-title{font-size:1.5rem}
+  .hstat-val{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOCK -->
+<div id="lock">
+  <div class="lock-card">
+    <div class="icon">🍳</div>
+    <h1>My Recipe Blog</h1>
+    <p>Enter your password to continue</p>
+    <input type="password" id="pw-in" placeholder="password" autocomplete="current-password"/>
+    <button onclick="checkPw()">Let me in ✨</button>
+    <div class="lock-err" id="lock-err"></div>
+  </div>
+  <p class="lock-hint">Default password: <strong>recipes</strong> — change it after logging in</p>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🍴</div>
+      <div>
+        <h1>My Recipe Blog</h1>
+        <span id="hdr-count"></span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="view-toggle">
+        <button class="vtab active" id="tab-grid" onclick="setView('grid')">🃏 Cards</button>
+        <button class="vtab" id="tab-blog" onclick="setView('blog')">📜 Blog</button>
+      </div>
+      <button class="btn btn-outline" onclick="togglePwPanel()">🔑</button>
+      <button class="btn btn-red" onclick="openModal()">+ New recipe</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="config-banner">
+      <strong>⚙️ Supabase not connected yet.</strong> Recipes are saving to your browser for now.
+      Open this file in a text editor and fill in your <code>SUPABASE_URL</code> and <code>SUPABASE_KEY</code> at the top of the &lt;script&gt; section.
+      See <strong>SETUP.md</strong> for step-by-step instructions.
+    </div>
+
+    <div id="pw-panel">
+      <h3>Change password</h3>
+      <input type="password" id="new-pw" placeholder="New password"/>
+      <input type="password" id="conf-pw" placeholder="Confirm password"/>
+      <div style="display:flex;gap:.75rem;align-items:center">
+        <button class="btn btn-teal btn-sm" onclick="savePw()">Save</button>
+        <button class="btn btn-outline btn-sm" onclick="togglePwPanel()">Cancel</button>
+        <span id="pw-msg"></span>
+      </div>
+    </div>
+
+    <div class="hero-stats" id="stats"></div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="srch" placeholder="Search recipes, notes…" oninput="render()"/>
+      </div>
+      <select class="filter-select" id="srt" onchange="render()">
+        <option value="newest">Newest first</option>
+        <option value="oldest">Oldest first</option>
+        <option value="rating">Top rated</option>
+        <option value="az">A → Z</option>
+      </select>
+    </div>
+
+    <div class="pills" id="pills"></div>
+
+    <!-- CARD GRID -->
+    <div class="grid" id="card-grid"></div>
+
+    <!-- BLOG FEED -->
+    <div id="blog-feed"></div>
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="handleOvClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="modal-title">New recipe 🎉</h2>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="field">
+      <label>Recipe name *</label>
+      <input type="text" id="f-name" placeholder="e.g. Spicy Mango Tacos"/>
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <select id="f-cat">
+        <option>Breakfast</option><option>Lunch</option>
+        <option selected>Dinner</option><option>Snack</option>
+        <option>Dessert</option><option>Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Photo</label>
+      <div class="photo-drop" id="photo-drop"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="handleDrop(event)"
+        onclick="document.getElementById('f-photo').click()">
+        <input type="file" id="f-photo" accept="image/*" onchange="handlePhotoFile(event)"/>
+        <div style="font-size:2rem;margin-bottom:.4rem">📷</div>
+        <div class="photo-txt" id="photo-txt">Click or drag a photo here</div>
+        <img id="photo-prev" class="photo-prev" alt="preview"/>
+      </div>
+      <div class="upload-status" id="upload-status"></div>
+    </div>
+    <div class="field">
+      <label>Your rating</label>
+      <div class="star-picker" id="star-picker"></div>
+    </div>
+    <div class="field">
+      <label>Notes &amp; thoughts</label>
+      <textarea id="f-notes" placeholder="What did you love? What would you tweak? Tips for next time…"></textarea>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-red" id="save-btn" onclick="saveRecipe()">Save recipe 🍽</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────
+//  CONFIGURATION — fill these in after Supabase setup
+// ─────────────────────────────────────────────────
+const SUPABASE_URL = '';        // e.g. 'https://abcdefgh.supabase.co'
+const SUPABASE_KEY = '';        // your anon/public key
+const BUCKET_NAME  = 'recipe-photos';   // storage bucket name
+const TABLE_NAME   = 'recipes';         // table name
+// ─────────────────────────────────────────────────
+
+const PK = 'recipeblog_pw_v1';
+const LS_KEY = 'recipeblog_v3';
+const CATS = ['Breakfast','Lunch','Dinner','Snack','Dessert','Other'];
+const EMOJI = {Breakfast:'🍳',Lunch:'🥗',Dinner:'🍝',Snack:'🧁',Dessert:'🍰',Other:'🍴'};
+
+let recipes = [];
+let editId = null;
+let filterCat = 'All';
+let formRating = 0;
+let hoverStar = 0;
+let pendingPhotoFile = null;
+let pendingPhotoPreview = null;
+let currentView = 'grid';
+let useSupabase = false;
+
+// ── Supabase helpers ───────────────────────────
+function sbHeaders() {
+  return {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+}
+async function sbFetch(path, opts={}) {
+  const res = await fetch(SUPABASE_URL + path, {...opts, headers: {...sbHeaders(), ...(opts.headers||{})}});
+  if (!res.ok) throw new Error(await res.text());
+  return res.status === 204 ? null : res.json();
+}
+async function uploadPhoto(file) {
+  const ext = file.name.split('.').pop();
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET_NAME}/${path}`, {
+    method: 'POST',
+    headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': file.type, 'x-upsert': 'true'},
+    body: file
+  });
+  if (!res.ok) throw new Error('Photo upload failed');
+  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${path}`;
+}
+
+// ── Data layer (Supabase or localStorage fallback) ──
+async function loadRecipes() {
+  if (useSupabase) {
+    const data = await sbFetch(`/rest/v1/${TABLE_NAME}?select=*&order=date.desc`);
+    recipes = data || [];
+  } else {
+    try { const r = localStorage.getItem(LS_KEY); recipes = r ? JSON.parse(r) : seed(); if (!r) lsSave(); }
+    catch(e) { recipes = []; }
+  }
+}
+function lsSave() { localStorage.setItem(LS_KEY, JSON.stringify(recipes)); }
+async function saveToDb(data, id=null) {
+  if (useSupabase) {
+    if (id) {
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'PATCH', body: JSON.stringify(data)});
+      return Array.isArray(res) ? res[0] : res;
+    } else {
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}`, {method:'POST', body: JSON.stringify(data)});
+      return Array.isArray(res) ? res[0] : res;
+    }
+  } else {
+    if (id) {
+      const i = recipes.findIndex(x=>x.id===id);
+      if (i>-1) { recipes[i]={...recipes[i],...data}; lsSave(); return recipes[i]; }
+    } else {
+      const r = {id: uid(), ...data};
+      recipes.unshift(r); lsSave(); return r;
+    }
+  }
+}
+async function deleteFromDb(id) {
+  if (useSupabase) {
+    await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'DELETE'});
+  } else {
+    recipes = recipes.filter(x=>x.id!==id); lsSave();
+  }
+}
+
+function seed() {
+  return [
+    {id:uid(),name:'Shakshuka',category:'Breakfast',rating:5,notes:'Perfect Sunday dish. Extra harissa for heat — loved it. Try crumbled feta on top next time.',date:'2026-03-10',photo_url:null},
+    {id:uid(),name:'Lemon Garlic Pasta',category:'Dinner',rating:4,notes:'Bright and fast. Reserve more pasta water — sauce was a touch thick.',date:'2026-03-15',photo_url:null},
+    {id:uid(),name:'Banana Bread',category:'Dessert',rating:5,notes:'Very ripe bananas are non-negotiable. Walnuts add perfect crunch. Double the batch next time!',date:'2026-03-18',photo_url:null}
+  ];
+}
+function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
+
+// ── Auth ───────────────────────────────────────
+function getPw() { return localStorage.getItem(PK)||'recipes'; }
+function checkPw() {
+  const v = document.getElementById('pw-in').value;
+  if (v === getPw()) {
+    document.getElementById('lock').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    document.getElementById('lock-err').textContent = 'Wrong password, try again.';
+    document.getElementById('pw-in').value = '';
+    document.getElementById('pw-in').focus();
+  }
+}
+document.getElementById('pw-in').addEventListener('keydown', e => { if (e.key==='Enter') checkPw(); });
+function togglePwPanel() {
+  const p = document.getElementById('pw-panel');
+  p.style.display = p.style.display==='block' ? 'none' : 'block';
+  document.getElementById('pw-msg').textContent='';
+}
+function savePw() {
+  const np=document.getElementById('new-pw').value.trim();
+  const cp=document.getElementById('conf-pw').value.trim();
+  const msg=document.getElementById('pw-msg');
+  if (!np){msg.style.color='var(--tomato)';msg.textContent='Cannot be empty.';return;}
+  if (np!==cp){msg.style.color='var(--tomato)';msg.textContent='Passwords do not match.';return;}
+  localStorage.setItem(PK,np);
+  msg.style.color='var(--teal)';msg.textContent='Password saved! ✓';
+  setTimeout(togglePwPanel,1500);
+}
+
+// ── Init ───────────────────────────────────────
+async function init() {
+  useSupabase = !!(SUPABASE_URL && SUPABASE_KEY);
+  if (!useSupabase) document.getElementById('config-banner').style.display='block';
+  showLoading();
+  try { await loadRecipes(); } catch(e) { console.error(e); recipes=[]; }
+  render();
+}
+
+function showLoading() {
+  document.getElementById('card-grid').innerHTML = `<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>Loading recipes…</p></div>`;
+}
+
+// ── View toggle ────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById('tab-grid').classList.toggle('active', v==='grid');
+  document.getElementById('tab-blog').classList.toggle('active', v==='blog');
+  document.getElementById('card-grid').style.display = v==='grid' ? 'grid' : 'none';
+  document.getElementById('blog-feed').style.display = v==='blog' ? 'block' : 'none';
+  render();
+}
+
+// ── Render ─────────────────────────────────────
+function starStr(n, sz) {
+  let s='';
+  for (let i=1;i<=5;i++) s+=`<span style="color:${i<=n?'#E8A020':'#DDD0BE'};${sz?'font-size:'+sz:''}">★</span>`;
+  return s;
+}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtDate(d) { return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
+function fmtDateShort(d) { return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+
+function getFiltered() {
+  const srch = document.getElementById('srch').value.toLowerCase();
+  const srt  = document.getElementById('srt').value;
+  let list = recipes.filter(r => {
+    const mc = filterCat==='All' || r.category===filterCat;
+    const ms = r.name.toLowerCase().includes(srch) || (r.notes||'').toLowerCase().includes(srch);
+    return mc && ms;
+  });
+  if (srt==='newest')      list.sort((a,b)=>b.date.localeCompare(a.date));
+  else if (srt==='oldest') list.sort((a,b)=>a.date.localeCompare(b.date));
+  else if (srt==='rating') list.sort((a,b)=>b.rating-a.rating);
+  else                     list.sort((a,b)=>a.name.localeCompare(b.name));
+  return list;
+}
+
+function render() {
+  const list = getFiltered();
+  const srch = document.getElementById('srch').value;
+
+  document.getElementById('hdr-count').textContent = `${recipes.length} recipe${recipes.length!==1?'s':''}`;
+
+  // stats
+  const avg = recipes.length ? (recipes.reduce((s,r)=>s+r.rating,0)/recipes.length).toFixed(1) : '—';
+  const topCat = (() => {
+    if (!recipes.length) return '—';
+    const c={}; recipes.forEach(r=>c[r.category]=(c[r.category]||0)+1);
+    return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];
+  })();
+  const withPhotos = recipes.filter(r=>r.photo_url).length;
+  document.getElementById('stats').innerHTML=`
+    <div class="hstat" data-emoji="🍽"><div class="hstat-label">Recipes</div><div class="hstat-val">${recipes.length}</div></div>
+    <div class="hstat" data-emoji="⭐"><div class="hstat-label">Avg rating</div><div class="hstat-val">${avg}</div></div>
+    <div class="hstat" data-emoji="📸"><div class="hstat-label">With photos</div><div class="hstat-val">${withPhotos}</div></div>
+    <div class="hstat" data-emoji="🏆"><div class="hstat-label">Top category</div><div class="hstat-val" style="font-size:1rem;padding-top:4px">${topCat}</div></div>
+  `;
+
+  // pills
+  const avail = ['All', ...CATS.filter(c=>recipes.some(r=>r.category===c))];
+  document.getElementById('pills').innerHTML = avail.map(c => {
+    const cnt = c==='All' ? recipes.length : recipes.filter(r=>r.category===c).length;
+    return `<button class="pill${filterCat===c?' active':''}" onclick="setFilter('${c}')">${c==='All'?'✨ ':EMOJI[c]+' '}${c} <span style="opacity:.6">${cnt}</span></button>`;
+  }).join('');
+
+  if (currentView === 'grid') renderGrid(list, srch);
+  else renderBlog(list, srch);
+}
+
+function renderGrid(list, srch) {
+  const el = document.getElementById('card-grid');
+  if (!list.length) { el.innerHTML=emptyHTML(srch); return; }
+  el.innerHTML = list.map(r => `
+    <div class="rcard">
+      ${r.photo_url
+        ? `<img class="rcard-photo" src="${esc(r.photo_url)}" alt="${esc(r.name)}" loading="lazy"/>`
+        : `<div class="rcard-nophoto">${EMOJI[r.category]||'🍴'}<span>No photo yet</span></div>`}
+      <div class="rcard-body">
+        <div class="rcard-top">
+          <div class="rcard-name">${esc(r.name)}</div>
+          <span class="cat-chip chip-${r.category}">${r.category}</span>
+        </div>
+        <div class="rcard-meta">
+          <div class="rcard-stars">${starStr(r.rating)}</div>
+          <div class="rcard-date">${fmtDateShort(r.date)}</div>
+        </div>
+        ${r.notes ? `<div class="rcard-notes">${esc(r.notes)}</div>` : ''}
+      </div>
+      <div class="rcard-actions">
+        <button onclick="openEdit('${r.id}')">✏️ Edit</button>
+        <button class="del" onclick="del('${r.id}')">🗑 Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderBlog(list, srch) {
+  const el = document.getElementById('blog-feed');
+  if (!list.length) { el.innerHTML=`<div class="empty"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`; return; }
+  el.innerHTML = list.map(r => `
+    <article class="blog-post">
+      ${r.photo_url
+        ? `<img class="blog-hero" src="${esc(r.photo_url)}" alt="${esc(r.name)}" loading="lazy"/>`
+        : `<div class="blog-nophoto">${EMOJI[r.category]||'🍴'}</div>`}
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span class="cat-chip chip-${r.category}">${r.category}</span>
+          <span class="blog-date">${fmtDate(r.date)}</span>
+        </div>
+        <h2 class="blog-title">${esc(r.name)}</h2>
+        <div class="blog-stars">${starStr(r.rating,'1rem')}</div>
+        ${r.notes ? `
+          <hr class="blog-divider"/>
+          <div class="blog-notes-label">My notes</div>
+          <div class="blog-notes">${esc(r.notes)}</div>
+        ` : ''}
+      </div>
+      <div class="blog-footer">
+        <button class="btn btn-outline btn-sm" onclick="openEdit('${r.id}')">✏️ Edit</button>
+        <button class="btn btn-sm" style="border:2px solid #FBDAD6;color:#C0392B;background:transparent;border-radius:99px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer" onclick="del('${r.id}')">🗑 Delete</button>
+      </div>
+    </article>
+  `).join('');
+}
+
+function emptyHTML(srch) {
+  return `<div class="empty" style="grid-column:1/-1"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`;
+}
+
+function setFilter(c) { filterCat=c; render(); }
+
+// ── Modal ──────────────────────────────────────
+function renderStars() {
+  document.getElementById('star-picker').innerHTML = Array.from({length:5},(_,i) => {
+    const n=i+1, filled=hoverStar>=n||(!hoverStar&&formRating>=n);
+    return `<button type="button" onmouseenter="hoverStar=${n};renderStars()" onmouseleave="hoverStar=0;renderStars()" onclick="formRating=${n};renderStars()" style="color:${filled?'#E8A020':'#DDD0BE'}">★</button>`;
+  }).join('');
+}
+
+function openModal(id=null) {
+  editId=id;
+  const r=id?recipes.find(x=>x.id===id):null;
+  document.getElementById('modal-title').textContent = id?'Edit recipe ✏️':'New recipe 🎉';
+  document.getElementById('f-name').value = r?r.name:'';
+  document.getElementById('f-cat').value  = r?r.category:'Dinner';
+  document.getElementById('f-notes').value= r?r.notes:'';
+  formRating=r?r.rating:0; hoverStar=0;
+  pendingPhotoFile=null; pendingPhotoPreview=null;
+  document.getElementById('photo-txt').textContent = r&&r.photo_url?'Photo saved — click to replace':'Click or drag a photo here';
+  const prev=document.getElementById('photo-prev');
+  if (r&&r.photo_url){prev.src=r.photo_url;prev.style.display='block';}
+  else {prev.src='';prev.style.display='none';}
+  document.getElementById('upload-status').textContent='';
+  document.getElementById('save-btn').disabled=false;
+  renderStars();
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('f-name').focus(),200);
+}
+function openEdit(id){openModal(id);}
+function closeModal(){document.getElementById('overlay').classList.remove('open');}
+function handleOvClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
+function handlePhotoFile(e){setPhotoFile(e.target.files[0]);}
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('photo-drop').classList.remove('drag');
+  const f=e.dataTransfer.files[0];
+  if(f&&f.type.startsWith('image/'))setPhotoFile(f);
+}
+function setPhotoFile(file){
+  if(!file)return;
+  pendingPhotoFile=file;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    pendingPhotoPreview=ev.target.result;
+    const prev=document.getElementById('photo-prev');
+    prev.src=pendingPhotoPreview; prev.style.display='block';
+    document.getElementById('photo-txt').textContent=`${file.name} — ready to upload`;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function saveRecipe() {
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').focus();return;}
+
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true; btn.textContent='Saving…';
+  const status=document.getElementById('upload-status');
+
+  try {
+    let photo_url = null;
+    const existing = editId?recipes.find(x=>x.id===editId):null;
+
+    if (pendingPhotoFile) {
+      if (useSupabase) {
+        status.style.color='var(--ink-muted)'; status.textContent='Uploading photo…';
+        photo_url = await uploadPhoto(pendingPhotoFile);
+      } else {
+        // localStorage fallback: store as base64
+        photo_url = pendingPhotoPreview;
+      }
+    } else {
+      photo_url = existing?existing.photo_url:null;
+    }
+
+    const data = {
+      name,
+      category: document.getElementById('f-cat').value,
+      rating:   formRating,
+      notes:    document.getElementById('f-notes').value.trim(),
+      photo_url,
+      date:     existing?.date || new Date().toISOString().split('T')[0]
+    };
+
+    status.textContent='Saving recipe…';
+    const saved = await saveToDb(data, editId||null);
+
+    if (useSupabase) {
+      await loadRecipes(); // refresh from DB
+    }
+
+    closeModal();
+    render();
+  } catch(err) {
+    status.style.color='var(--tomato)';
+    status.textContent='Error: '+err.message;
+    btn.disabled=false; btn.textContent='Save recipe 🍽';
+  }
+}
+
+async function del(id){
+  if(!confirm('Remove this recipe?'))return;
+  try {
+    await deleteFromDb(id);
+    if(useSupabase) await loadRecipes();
+    render();
+  } catch(err){ alert('Could not delete: '+err.message); }
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
