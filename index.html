@@ -3,31 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Recipe Blog</title>
+<title>What's Bri Cooking</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:         #FFFBF5;
+  --bg:         #FAF8F5;
   --surface:    #FFFFFF;
-  --tomato:     #E8462A;
-  --tomato-lt:  #FDE8E4;
-  --mustard:    #E8A020;
-  --mustard-lt: #FEF3DC;
-  --teal:       #2A9D8F;
-  --teal-lt:    #D6F2EE;
-  --plum:       #7B4FA6;
-  --plum-lt:    #EFE4FA;
-  --ink:        #1A1208;
-  --ink-mid:    #5C4A30;
-  --ink-muted:  #9C8A70;
-  --border:     #EDE0CC;
+  --tomato:     #C4735A;
+  --tomato-lt:  #F5E8E3;
+  --mustard:    #C49A52;
+  --mustard-lt: #F5EED8;
+  --teal:       #5A9490;
+  --teal-lt:    #DFF0EE;
+  --plum:       #8A72A8;
+  --plum-lt:    #EDE5F5;
+  --ink:        #2A2018;
+  --ink-mid:    #6A5A48;
+  --ink-muted:  #A89880;
+  --border:     #E8DDD0;
   --r:          16px;
   --r-sm:       10px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
-body::before{content:'';display:block;height:6px;background:repeating-linear-gradient(90deg,var(--tomato) 0 40px,var(--mustard) 40px 80px,var(--teal) 80px 120px,var(--plum) 120px 160px)}
+body::before{content:'';display:block;height:5px;background:repeating-linear-gradient(90deg,#D4957A 0 40px,#D4B478 40px 80px,#7ABAAE 80px 120px,#A894C4 120px 160px)}
 
 /* ── LOCK ── */
 #lock{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;padding:2rem}
@@ -97,20 +97,21 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 
 /* CATEGORY CHIPS */
 .cat-chip{font-size:.7rem;font-weight:700;padding:.25rem .65rem;border-radius:99px;white-space:nowrap;flex-shrink:0}
-.chip-Breakfast{background:var(--teal-lt);color:#1A6B60}
-.chip-Lunch{background:var(--mustard-lt);color:#7A5010}
-.chip-Dinner{background:var(--plum-lt);color:#5A2A86}
-.chip-Snack{background:var(--tomato-lt);color:#A82A14}
-.chip-Dessert{background:#FDE8F8;color:#8A1A6A}
-.chip-Other{background:#EEF0E8;color:#4A5230}
+.chip-Breakfast{background:var(--teal-lt);color:#3A706C}
+.chip-Lunch{background:var(--mustard-lt);color:#7A6030}
+.chip-Dinner{background:var(--plum-lt);color:#5A4278}
+.chip-Snack{background:var(--tomato-lt);color:#8A4A38}
+.chip-Dessert{background:#F5E2F0;color:#7A4870}
+.chip-Other{background:#EEE8E0;color:#5A4A38}
 
 /* ── CARD GRID VIEW ── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem}
 .rcard{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);overflow:hidden;transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column}
 .rcard:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(26,18,8,.1)}
 .rcard-photo{width:100%;height:200px;object-fit:cover;display:block}
-.rcard-nophoto{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;font-size:2.5rem;background:linear-gradient(135deg,var(--mustard-lt),var(--tomato-lt))}
+.rcard-nophoto{width:100%;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;font-size:2.5rem;background:linear-gradient(135deg,#F0EAE0,#EDE0D8)}
 .rcard-nophoto span{font-size:.8rem;color:var(--ink-muted);font-weight:600}
+.photo-count-badge{position:absolute;top:8px;right:8px;background:rgba(26,18,8,.6);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:99px;font-family:'Nunito',sans-serif}
 .rcard-body{padding:1.1rem 1.25rem;flex:1;display:flex;flex-direction:column;gap:.6rem}
 .rcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem}
 .rcard-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:var(--ink);line-height:1.2}
@@ -121,8 +122,8 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 .rcard-actions{display:flex;gap:.5rem;padding:.75rem 1.25rem;border-top:2px solid var(--border);background:var(--bg)}
 .rcard-actions button{font-size:.75rem;font-weight:700;padding:.3rem .75rem;border-radius:99px;cursor:pointer;font-family:'Nunito',sans-serif;border:2px solid var(--border);background:transparent;color:var(--ink-mid);transition:all .12s}
 .rcard-actions button:hover{background:var(--surface);border-color:var(--ink-muted)}
-.rcard-actions .del{color:#C0392B;border-color:#FBDAD6}
-.rcard-actions .del:hover{background:#FEF0EE}
+.rcard-actions .del{color:#A05040;border-color:#EED8D0}
+.rcard-actions .del:hover{background:#F8EDEA}
 
 /* ── BLOG FEED VIEW ── */
 #blog-feed{display:none}
@@ -164,12 +165,57 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 .field input,.field textarea,.field select{width:100%;padding:.7rem .9rem;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:.9rem;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--tomato)}
 .field textarea{resize:vertical;min-height:110px;line-height:1.65}
-.photo-drop{border:2.5px dashed var(--border);border-radius:var(--r-sm);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:var(--bg)}
+.photo-drop{border:2.5px dashed var(--border);border-radius:var(--r-sm);padding:1.25rem 1rem;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;background:var(--bg)}
 .photo-drop:hover,.photo-drop.drag{border-color:var(--tomato);background:var(--tomato-lt)}
 .photo-drop input{display:none}
-.photo-prev{width:100%;max-height:200px;object-fit:cover;border-radius:var(--r-sm);display:none;margin-top:.75rem}
 .photo-txt{font-size:.85rem;color:var(--ink-muted);font-weight:600}
 .upload-status{font-size:.8rem;margin-top:.5rem;min-height:1.1rem}
+
+/* ── MULTI-PHOTO TRAY ── */
+.photo-tray{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.75rem;min-height:0}
+.photo-tray:empty{display:none}
+.ptile{position:relative;width:88px;height:72px;border-radius:8px;overflow:hidden;border:2px solid var(--border);cursor:grab;flex-shrink:0;transition:transform .15s,box-shadow .15s;background:#EEE8E0}
+.ptile:active{cursor:grabbing}
+.ptile.dragging{opacity:.45;transform:scale(.95)}
+.ptile.drag-over{border-color:var(--tomato);box-shadow:0 0 0 3px var(--tomato-lt)}
+.ptile img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.ptile-del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(26,18,8,.7);color:#fff;border:none;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .12s}
+.ptile-del:hover{background:var(--tomato)}
+.ptile-order{position:absolute;bottom:3px;left:5px;font-size:.62rem;font-weight:800;color:#fff;background:rgba(26,18,8,.55);padding:1px 4px;border-radius:4px;pointer-events:none}
+.ptile-add{border:2.5px dashed var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:border-color .15s,background .15s;cursor:pointer}
+.ptile-add:hover{border-color:var(--tomato);background:var(--tomato-lt)}
+
+/* ── CARD GALLERY (multi-photo) ── */
+.rcard-gallery{position:relative;width:100%;height:200px;overflow:hidden}
+.rcard-gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .3s}
+.gallery-dots{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:5px}
+.gdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);border:none;cursor:pointer;padding:0;transition:background .15s}
+.gdot.active{background:#fff}
+.gallery-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(26,18,8,.45);color:#fff;border:none;cursor:pointer;width:28px;height:28px;border-radius:50%;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:background .12s;z-index:2}
+.gallery-nav:hover{background:rgba(26,18,8,.7)}
+.gnav-l{left:7px}.gnav-r{right:7px}
+
+/* ── BLOG PHOTO GALLERY ── */
+.blog-gallery{display:grid;gap:6px;margin-bottom:0}
+.blog-gallery.count-1 img{width:100%;max-height:480px;object-fit:cover;border-radius:0;display:block}
+.blog-gallery.count-2{grid-template-columns:1fr 1fr}
+.blog-gallery.count-3{grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr}
+.blog-gallery.count-3 img:first-child{grid-row:1/3}
+.blog-gallery.count-4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.blog-gallery.count-many{grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto}
+.blog-gallery img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .2s;cursor:pointer}
+.blog-gallery.count-1 img{height:auto;max-height:480px}
+.blog-gallery img:hover{transform:scale(1.01)}
+
+/* ── LIGHTBOX ── */
+#lightbox{position:fixed;inset:0;background:rgba(10,7,4,.92);z-index:900;display:none;align-items:center;justify-content:center;padding:1.5rem}
+#lightbox.open{display:flex}
+#lightbox img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.6)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);color:#fff;border:none;cursor:pointer;width:44px;height:44px;border-radius:50%;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:2}
+.lb-nav:hover{background:rgba(255,255,255,.25)}
+.lb-l{left:1rem}.lb-r{right:1rem}
+.lb-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,.15);color:#fff;border:none;cursor:pointer;width:38px;height:38px;border-radius:50%;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+.lb-counter{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.6);font-size:.8rem;font-family:'Nunito',sans-serif;font-weight:700}
 .star-picker{display:flex;gap:4px}
 .star-picker button{font-size:1.6rem;background:none;border:none;cursor:pointer;padding:0;line-height:1;transition:transform .1s}
 .star-picker button:hover{transform:scale(1.2)}
@@ -211,7 +257,32 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 <div id="app">
   <header>
     <div class="logo">
-      <div class="logo-icon">🍴</div>
+      <div class="logo-icon" style="width:48px;height:48px;background:none;border-radius:0;overflow:visible">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Starburst outer ring -->
+          <path d="M24 1.5 L26.2 5.8 L30.8 4.2 L31.8 8.8 L36.5 8.5 L36.2 13.2 L40.6 14.4 L39.0 18.8 L43.0 21.2 L40.2 25.0 L43.2 28.6 L39.4 31.2 L41.2 35.8 L37.0 37.2 L37.4 41.8 L33.0 42.0 L32.0 46.4 L27.8 45.2 L25.8 49.0 L24 46.5 L22.2 49.0 L20.2 45.2 L16.0 46.4 L15.0 42.0 L10.6 41.8 L11.0 37.2 L6.8 35.8 L8.6 31.2 L4.8 28.6 L7.8 25.0 L5.0 21.2 L9.0 18.8 L7.4 14.4 L11.8 13.2 L11.5 8.5 L16.2 8.8 L17.2 4.2 L21.8 5.8 Z" fill="#C4735A"/>
+          <!-- Inner circle -->
+          <circle cx="24" cy="25" r="16" fill="#F5EED8"/>
+          <!-- Mid ring -->
+          <circle cx="24" cy="25" r="14" fill="none" stroke="#C49A52" stroke-width="1.2"/>
+          <!-- Bowl base -->
+          <path d="M13 27 Q13 35 24 35 Q35 35 35 27 Z" fill="#fff" stroke="#C4735A" stroke-width="1.2"/>
+          <!-- Bowl rim ellipse -->
+          <ellipse cx="24" cy="27" rx="11" ry="3" fill="#fff" stroke="#C4735A" stroke-width="1.2"/>
+          <!-- Pasta noodle squiggles -->
+          <path d="M17 25 Q18.5 22 20 25 Q21.5 28 23 25 Q24.5 22 26 25 Q27.5 28 29 25 Q30.5 22 32 25" stroke="#C49A52" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+          <path d="M16 27.5 Q17.5 24.5 19 27.5 Q20.5 30.5 22 27.5 Q23.5 24.5 25 27.5 Q26.5 30.5 28 27.5 Q29.5 24.5 31 27.5" stroke="#C49A52" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+          <!-- Steam wisps -->
+          <path d="M19 23 Q18 21 19 19 Q20 17 19 15" stroke="#C4735A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M24 22 Q23 20 24 18 Q25 16 24 14" stroke="#C4735A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <path d="M29 23 Q28 21 29 19 Q30 17 29 15" stroke="#C4735A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.6"/>
+          <!-- Dot accents on ring -->
+          <circle cx="24" cy="11" r="1.2" fill="#C4735A"/>
+          <circle cx="24" cy="39" r="1.2" fill="#C4735A"/>
+          <circle cx="11" cy="25" r="1.2" fill="#C4735A"/>
+          <circle cx="37" cy="25" r="1.2" fill="#C4735A"/>
+        </svg>
+      </div>
       <div>
         <h1>My Recipe Blog</h1>
         <span id="hdr-count"></span>
@@ -219,8 +290,8 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
     </div>
     <div class="header-actions">
       <div class="view-toggle">
-        <button class="vtab active" id="tab-grid" onclick="setView('grid')">🃏 Cards</button>
-        <button class="vtab" id="tab-blog" onclick="setView('blog')">📜 Blog</button>
+        <button class="vtab active" id="tab-grid" onclick="setView('grid')">Cards</button>
+        <button class="vtab" id="tab-blog" onclick="setView('blog')">Blog</button>
       </div>
       <button class="btn btn-outline" onclick="togglePwPanel()">🔑</button>
       <button class="btn btn-red" onclick="openModal()">+ New recipe</button>
@@ -290,17 +361,17 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
       </select>
     </div>
     <div class="field">
-      <label>Photo</label>
+      <label>Photos <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-muted)">— drag thumbnails to reorder</span></label>
       <div class="photo-drop" id="photo-drop"
         ondragover="event.preventDefault();this.classList.add('drag')"
         ondragleave="this.classList.remove('drag')"
         ondrop="handleDrop(event)"
         onclick="document.getElementById('f-photo').click()">
-        <input type="file" id="f-photo" accept="image/*" onchange="handlePhotoFile(event)"/>
+        <input type="file" id="f-photo" accept="image/*" multiple onchange="handlePhotoFile(event)"/>
         <div style="font-size:2rem;margin-bottom:.4rem">📷</div>
-        <div class="photo-txt" id="photo-txt">Click or drag a photo here</div>
-        <img id="photo-prev" class="photo-prev" alt="preview"/>
+        <div class="photo-txt" id="photo-txt">Click or drag photos here (multiple OK)</div>
       </div>
+      <div class="photo-tray" id="photo-tray"></div>
       <div class="upload-status" id="upload-status"></div>
     </div>
     <div class="field">
@@ -316,6 +387,15 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
       <button class="btn btn-red" id="save-btn" onclick="saveRecipe()">Save recipe 🍽</button>
     </div>
   </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="lbClose()">
+  <button class="lb-close" onclick="lbClose()">✕</button>
+  <button class="lb-nav lb-l" onclick="event.stopPropagation();lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt=""/>
+  <button class="lb-nav lb-r" onclick="event.stopPropagation();lbNav(1)">›</button>
+  <div class="lb-counter" id="lb-counter"></div>
 </div>
 
 <script>
@@ -338,10 +418,42 @@ let editId = null;
 let filterCat = 'All';
 let formRating = 0;
 let hoverStar = 0;
-let pendingPhotoFile = null;
-let pendingPhotoPreview = null;
+
+// pendingPhotos = array of {file, preview, url} — url set after upload
+let pendingPhotos = [];
+// dragSrc index for tray reorder
+let dragSrcIdx = null;
+
 let currentView = 'grid';
 let useSupabase = false;
+
+// ── Lightbox ────────────────────────────────────
+let lbPhotos = [];
+let lbIdx = 0;
+function lbOpen(photos, idx) {
+  lbPhotos = photos; lbIdx = idx;
+  document.getElementById('lightbox').classList.add('open');
+  lbRender();
+  document.body.style.overflow='hidden';
+}
+function lbRender() {
+  document.getElementById('lb-img').src = lbPhotos[lbIdx];
+  document.getElementById('lb-counter').textContent = lbPhotos.length > 1 ? `${lbIdx+1} / ${lbPhotos.length}` : '';
+}
+function lbNav(dir) {
+  lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
+  lbRender();
+}
+function lbClose() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key==='ArrowLeft') lbNav(-1);
+  else if (e.key==='ArrowRight') lbNav(1);
+  else if (e.key==='Escape') lbClose();
+});
 
 // ── Supabase helpers ───────────────────────────
 function sbHeaders() {
@@ -364,15 +476,24 @@ async function uploadPhoto(file) {
   return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${path}`;
 }
 
-// ── Data layer (Supabase or localStorage fallback) ──
+// ── Data layer ─────────────────────────────────
 async function loadRecipes() {
   if (useSupabase) {
     const data = await sbFetch(`/rest/v1/${TABLE_NAME}?select=*&order=date.desc`);
-    recipes = data || [];
+    recipes = (data || []).map(normalisePhotos);
   } else {
-    try { const r = localStorage.getItem(LS_KEY); recipes = r ? JSON.parse(r) : seed(); if (!r) lsSave(); }
-    catch(e) { recipes = []; }
+    try {
+      const r = localStorage.getItem(LS_KEY);
+      recipes = r ? JSON.parse(r).map(normalisePhotos) : seed();
+      if (!r) lsSave();
+    } catch(e) { recipes = []; }
   }
+}
+// Ensure every recipe has a photos array (backwards compat with old photo_url)
+function normalisePhotos(r) {
+  if (r.photos && Array.isArray(r.photos)) return r;
+  if (r.photo_url) return {...r, photos: [r.photo_url]};
+  return {...r, photos: []};
 }
 function lsSave() { localStorage.setItem(LS_KEY, JSON.stringify(recipes)); }
 async function saveToDb(data, id=null) {
@@ -404,9 +525,9 @@ async function deleteFromDb(id) {
 
 function seed() {
   return [
-    {id:uid(),name:'Shakshuka',category:'Breakfast',rating:5,notes:'Perfect Sunday dish. Extra harissa for heat — loved it. Try crumbled feta on top next time.',date:'2026-03-10',photo_url:null},
-    {id:uid(),name:'Lemon Garlic Pasta',category:'Dinner',rating:4,notes:'Bright and fast. Reserve more pasta water — sauce was a touch thick.',date:'2026-03-15',photo_url:null},
-    {id:uid(),name:'Banana Bread',category:'Dessert',rating:5,notes:'Very ripe bananas are non-negotiable. Walnuts add perfect crunch. Double the batch next time!',date:'2026-03-18',photo_url:null}
+    {id:uid(),name:'Shakshuka',category:'Breakfast',rating:5,notes:'Perfect Sunday dish. Extra harissa for heat — loved it. Try crumbled feta on top next time.',date:'2026-03-10',photos:[]},
+    {id:uid(),name:'Lemon Garlic Pasta',category:'Dinner',rating:4,notes:'Bright and fast. Reserve more pasta water — sauce was a touch thick.',date:'2026-03-15',photos:[]},
+    {id:uid(),name:'Banana Bread',category:'Dessert',rating:5,notes:'Very ripe bananas are non-negotiable. Walnuts add perfect crunch. Double the batch next time!',date:'2026-03-18',photos:[]}
   ];
 }
 function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
@@ -450,7 +571,6 @@ async function init() {
   try { await loadRecipes(); } catch(e) { console.error(e); recipes=[]; }
   render();
 }
-
 function showLoading() {
   document.getElementById('card-grid').innerHTML = `<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>Loading recipes…</p></div>`;
 }
@@ -496,14 +616,13 @@ function render() {
 
   document.getElementById('hdr-count').textContent = `${recipes.length} recipe${recipes.length!==1?'s':''}`;
 
-  // stats
   const avg = recipes.length ? (recipes.reduce((s,r)=>s+r.rating,0)/recipes.length).toFixed(1) : '—';
   const topCat = (() => {
     if (!recipes.length) return '—';
     const c={}; recipes.forEach(r=>c[r.category]=(c[r.category]||0)+1);
     return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];
   })();
-  const withPhotos = recipes.filter(r=>r.photo_url).length;
+  const withPhotos = recipes.filter(r=>r.photos&&r.photos.length).length;
   document.getElementById('stats').innerHTML=`
     <div class="hstat" data-emoji="🍽"><div class="hstat-label">Recipes</div><div class="hstat-val">${recipes.length}</div></div>
     <div class="hstat" data-emoji="⭐"><div class="hstat-label">Avg rating</div><div class="hstat-val">${avg}</div></div>
@@ -511,7 +630,6 @@ function render() {
     <div class="hstat" data-emoji="🏆"><div class="hstat-label">Top category</div><div class="hstat-val" style="font-size:1rem;padding-top:4px">${topCat}</div></div>
   `;
 
-  // pills
   const avail = ['All', ...CATS.filter(c=>recipes.some(r=>r.category===c))];
   document.getElementById('pills').innerHTML = avail.map(c => {
     const cnt = c==='All' ? recipes.length : recipes.filter(r=>r.category===c).length;
@@ -522,14 +640,57 @@ function render() {
   else renderBlog(list, srch);
 }
 
+// ── Card gallery widget ────────────────────────
+function cardGalleryHTML(r) {
+  const photos = r.photos || [];
+  if (!photos.length) {
+    return `<div class="rcard-nophoto">${EMOJI[r.category]||'🍴'}<span>No photo yet</span></div>`;
+  }
+  if (photos.length === 1) {
+    return `<div class="rcard-gallery" id="cg-${r.id}" data-idx="0" data-photos='${JSON.stringify(photos).replace(/'/g,"&#39;")}'>
+      <img src="${esc(photos[0])}" alt="${esc(r.name)}" loading="lazy" data-gallery-img style="cursor:zoom-in" onclick="lbOpen(JSON.parse(this.closest('.rcard-gallery').dataset.photos),0)"/>
+    </div>`;
+  }
+  return `
+    <div class="rcard-gallery" id="cg-${r.id}" data-idx="0" data-photos='${JSON.stringify(photos).replace(/'/g,"&#39;")}'>
+      <img src="${esc(photos[0])}" alt="${esc(r.name)}" loading="lazy" data-gallery-img style="cursor:zoom-in" onclick="lbOpen(JSON.parse(this.closest('.rcard-gallery').dataset.photos),parseInt(this.closest('.rcard-gallery').dataset.idx))"/>
+      <button class="gallery-nav gnav-l" onclick="cgNav('${r.id}',-1)">‹</button>
+      <button class="gallery-nav gnav-r" onclick="cgNav('${r.id}',1)">›</button>
+      <div class="gallery-dots">${photos.map((_,i)=>`<button class="gdot${i===0?' active':''}" onclick="cgSet('${r.id}',${i})"></button>`).join('')}</div>
+      <span class="photo-count-badge">📷 ${photos.length}</span>
+    </div>`;
+}
+
+function cgInit() {
+  // set dataset on each gallery after DOM insert
+  document.querySelectorAll('[id^="cg-"]').forEach(el => {
+    const rid = el.id.slice(3);
+    const r = recipes.find(x=>x.id===rid);
+    if (!r) return;
+    el.dataset.photos = JSON.stringify(r.photos);
+    el.dataset.idx = '0';
+  });
+}
+function cgNav(rid, dir) {
+  const el = document.getElementById('cg-'+rid);
+  const photos = JSON.parse(el.dataset.photos);
+  let idx = (parseInt(el.dataset.idx) + dir + photos.length) % photos.length;
+  cgSet(rid, idx);
+}
+function cgSet(rid, idx) {
+  const el = document.getElementById('cg-'+rid);
+  const photos = JSON.parse(el.dataset.photos);
+  el.dataset.idx = idx;
+  el.querySelector('[data-gallery-img]').src = photos[idx];
+  el.querySelectorAll('.gdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+}
+
 function renderGrid(list, srch) {
   const el = document.getElementById('card-grid');
   if (!list.length) { el.innerHTML=emptyHTML(srch); return; }
   el.innerHTML = list.map(r => `
     <div class="rcard">
-      ${r.photo_url
-        ? `<img class="rcard-photo" src="${esc(r.photo_url)}" alt="${esc(r.name)}" loading="lazy"/>`
-        : `<div class="rcard-nophoto">${EMOJI[r.category]||'🍴'}<span>No photo yet</span></div>`}
+      ${cardGalleryHTML(r)}
       <div class="rcard-body">
         <div class="rcard-top">
           <div class="rcard-name">${esc(r.name)}</div>
@@ -547,6 +708,19 @@ function renderGrid(list, srch) {
       </div>
     </div>
   `).join('');
+  cgInit();
+}
+
+// ── Blog gallery HTML ──────────────────────────
+function blogGalleryHTML(r) {
+  const photos = r.photos || [];
+  if (!photos.length) {
+    return `<div class="blog-nophoto">${EMOJI[r.category]||'🍴'}</div>`;
+  }
+  const photosAttr = JSON.stringify(photos).replace(/'/g,"&#39;");
+  const cls = photos.length===1?'count-1':photos.length===2?'count-2':photos.length===3?'count-3':photos.length===4?'count-4':'count-many';
+  const visible = photos.length <= 5 ? photos : photos.slice(0,5);
+  return `<div class="blog-gallery ${cls}" data-photos='${photosAttr}'>${visible.map((url,i)=>`<img src="${esc(url)}" alt="${esc(r.name)} photo ${i+1}" loading="lazy" onclick="lbOpen(JSON.parse(this.closest('.blog-gallery').dataset.photos),${i})"/>`).join('')}</div>`;
 }
 
 function renderBlog(list, srch) {
@@ -554,13 +728,12 @@ function renderBlog(list, srch) {
   if (!list.length) { el.innerHTML=`<div class="empty"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`; return; }
   el.innerHTML = list.map(r => `
     <article class="blog-post">
-      ${r.photo_url
-        ? `<img class="blog-hero" src="${esc(r.photo_url)}" alt="${esc(r.name)}" loading="lazy"/>`
-        : `<div class="blog-nophoto">${EMOJI[r.category]||'🍴'}</div>`}
+      ${blogGalleryHTML(r)}
       <div class="blog-body">
         <div class="blog-meta">
           <span class="cat-chip chip-${r.category}">${r.category}</span>
           <span class="blog-date">${fmtDate(r.date)}</span>
+          ${r.photos&&r.photos.length>1?`<span style="font-size:.75rem;color:var(--ink-muted)">📷 ${r.photos.length} photos</span>`:''}
         </div>
         <h2 class="blog-title">${esc(r.name)}</h2>
         <div class="blog-stars">${starStr(r.rating,'1rem')}</div>
@@ -572,7 +745,7 @@ function renderBlog(list, srch) {
       </div>
       <div class="blog-footer">
         <button class="btn btn-outline btn-sm" onclick="openEdit('${r.id}')">✏️ Edit</button>
-        <button class="btn btn-sm" style="border:2px solid #FBDAD6;color:#C0392B;background:transparent;border-radius:99px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer" onclick="del('${r.id}')">🗑 Delete</button>
+        <button class="btn btn-sm" style="border:2px solid #EED8D0;color:#A05040;background:transparent;border-radius:99px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer" onclick="del('${r.id}')">🗑 Delete</button>
       </div>
     </article>
   `).join('');
@@ -581,7 +754,6 @@ function renderBlog(list, srch) {
 function emptyHTML(srch) {
   return `<div class="empty" style="grid-column:1/-1"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`;
 }
-
 function setFilter(c) { filterCat=c; render(); }
 
 // ── Modal ──────────────────────────────────────
@@ -592,6 +764,52 @@ function renderStars() {
   }).join('');
 }
 
+// ── Photo Tray (multi-photo) ───────────────────
+function renderTray() {
+  const tray = document.getElementById('photo-tray');
+  tray.innerHTML = pendingPhotos.map((p, i) => `
+    <div class="ptile" draggable="true"
+      ondragstart="trayDragStart(${i})"
+      ondragover="event.preventDefault();trayDragOver(event,${i})"
+      ondragleave="trayDragLeave(event)"
+      ondrop="trayDrop(${i})"
+      ondragend="trayDragEnd()">
+      <img src="${p.preview}" alt="photo ${i+1}"/>
+      <button class="ptile-del" onclick="removePhoto(${i})" title="Remove">✕</button>
+      <span class="ptile-order">${i+1}</span>
+    </div>
+  `).join('') + `
+    <div class="ptile ptile-add" onclick="document.getElementById('f-photo').click()" title="Add more photos">＋</div>
+  `;
+  document.getElementById('photo-txt').textContent = pendingPhotos.length
+    ? `${pendingPhotos.length} photo${pendingPhotos.length!==1?'s':''} — drag to reorder, click + to add more`
+    : 'Click or drag photos here (multiple OK)';
+}
+
+function removePhoto(idx) {
+  pendingPhotos.splice(idx, 1);
+  renderTray();
+}
+
+// Tray drag-to-reorder
+function trayDragStart(idx) { dragSrcIdx = idx; }
+function trayDragOver(e, idx) {
+  e.preventDefault();
+  document.querySelectorAll('.ptile').forEach((t,i)=>t.classList.toggle('drag-over', i===idx && i!==dragSrcIdx));
+}
+function trayDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function trayDrop(toIdx) {
+  if (dragSrcIdx === null || dragSrcIdx === toIdx) return;
+  const moved = pendingPhotos.splice(dragSrcIdx, 1)[0];
+  pendingPhotos.splice(toIdx, 0, moved);
+  dragSrcIdx = null;
+  renderTray();
+}
+function trayDragEnd() {
+  document.querySelectorAll('.ptile').forEach(t=>t.classList.remove('drag-over','dragging'));
+  dragSrcIdx = null;
+}
+
 function openModal(id=null) {
   editId=id;
   const r=id?recipes.find(x=>x.id===id):null;
@@ -600,14 +818,12 @@ function openModal(id=null) {
   document.getElementById('f-cat').value  = r?r.category:'Dinner';
   document.getElementById('f-notes').value= r?r.notes:'';
   formRating=r?r.rating:0; hoverStar=0;
-  pendingPhotoFile=null; pendingPhotoPreview=null;
-  document.getElementById('photo-txt').textContent = r&&r.photo_url?'Photo saved — click to replace':'Click or drag a photo here';
-  const prev=document.getElementById('photo-prev');
-  if (r&&r.photo_url){prev.src=r.photo_url;prev.style.display='block';}
-  else {prev.src='';prev.style.display='none';}
+  // Load existing photos into tray as-is (no file, just url/preview)
+  pendingPhotos = r && r.photos ? r.photos.map(url=>({file:null,preview:url,url})) : [];
   document.getElementById('upload-status').textContent='';
   document.getElementById('save-btn').disabled=false;
   renderStars();
+  renderTray();
   document.getElementById('overlay').classList.add('open');
   setTimeout(()=>document.getElementById('f-name').focus(),200);
 }
@@ -615,24 +831,23 @@ function openEdit(id){openModal(id);}
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
 function handleOvClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
-function handlePhotoFile(e){setPhotoFile(e.target.files[0]);}
+function handlePhotoFile(e){ addPhotoFiles(Array.from(e.target.files)); e.target.value=''; }
 function handleDrop(e){
   e.preventDefault();
   document.getElementById('photo-drop').classList.remove('drag');
-  const f=e.dataTransfer.files[0];
-  if(f&&f.type.startsWith('image/'))setPhotoFile(f);
+  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+  addPhotoFiles(files);
 }
-function setPhotoFile(file){
-  if(!file)return;
-  pendingPhotoFile=file;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    pendingPhotoPreview=ev.target.result;
-    const prev=document.getElementById('photo-prev');
-    prev.src=pendingPhotoPreview; prev.style.display='block';
-    document.getElementById('photo-txt').textContent=`${file.name} — ready to upload`;
-  };
-  reader.readAsDataURL(file);
+
+function addPhotoFiles(files) {
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      pendingPhotos.push({file, preview: ev.target.result, url: null});
+      renderTray();
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
 async function saveRecipe() {
@@ -644,36 +859,39 @@ async function saveRecipe() {
   const status=document.getElementById('upload-status');
 
   try {
-    let photo_url = null;
-    const existing = editId?recipes.find(x=>x.id===editId):null;
-
-    if (pendingPhotoFile) {
-      if (useSupabase) {
-        status.style.color='var(--ink-muted)'; status.textContent='Uploading photo…';
-        photo_url = await uploadPhoto(pendingPhotoFile);
-      } else {
-        // localStorage fallback: store as base64
-        photo_url = pendingPhotoPreview;
+    // Upload any new files, preserve existing urls
+    const finalPhotos = [];
+    let uploadCount = pendingPhotos.filter(p=>p.file).length;
+    let uploaded = 0;
+    for (const p of pendingPhotos) {
+      if (p.file) {
+        if (useSupabase) {
+          status.style.color='var(--ink-muted)';
+          status.textContent = `Uploading photo ${++uploaded} of ${uploadCount}…`;
+          const url = await uploadPhoto(p.file);
+          finalPhotos.push(url);
+        } else {
+          finalPhotos.push(p.preview); // base64 for localStorage
+        }
+      } else if (p.url) {
+        finalPhotos.push(p.url);
       }
-    } else {
-      photo_url = existing?existing.photo_url:null;
     }
 
+    const existing = editId ? recipes.find(x=>x.id===editId) : null;
     const data = {
       name,
       category: document.getElementById('f-cat').value,
       rating:   formRating,
       notes:    document.getElementById('f-notes').value.trim(),
-      photo_url,
+      photos:   finalPhotos,
+      photo_url: finalPhotos[0] || null, // keep legacy field for Supabase compatibility
       date:     existing?.date || new Date().toISOString().split('T')[0]
     };
 
     status.textContent='Saving recipe…';
-    const saved = await saveToDb(data, editId||null);
-
-    if (useSupabase) {
-      await loadRecipes(); // refresh from DB
-    }
+    await saveToDb(data, editId||null);
+    if (useSupabase) await loadRecipes();
 
     closeModal();
     render();
@@ -693,7 +911,7 @@ async function del(id){
   } catch(err){ alert('Could not delete: '+err.message); }
 }
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('lightbox').classList.contains('open'))closeModal();});
 </script>
 </body>
 </html>
