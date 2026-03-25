@@ -400,6 +400,7 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
       </div>
     </div>
     <div class="modal-foot">
+      <div id="upload-status" style="font-size:.8rem;color:var(--tomato);flex:1;align-self:center"></div>
       <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
       <button class="btn btn-red" id="save-btn" onclick="saveRecipe()">Save recipe 🍽</button>
     </div>
@@ -842,42 +843,66 @@ function renderStars() {
 // ── Content block editor ──────────────────────
 function renderContentEditor() {
   const editor=document.getElementById('content-editor');
+  if (!editor) return;
   editor.innerHTML='';
   contentBlocks.forEach((block,i)=>{
     const div=document.createElement('div');
     div.className='cblock';
+
+    const controls = `
+      <div class="cblock-controls">
+        ${i>0?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},-1)" title="Move up">↑</button>`:''}
+        ${i<contentBlocks.length-1?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},1)" title="Move down">↓</button>`:''}
+        <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
+      </div>`;
+
     if (block.type==='text') {
       div.className+=' cblock-text';
-      div.innerHTML=`
-        <textarea placeholder="Write your notes, steps, tips…" oninput="contentBlocks[${i}].text=this.value">${esc(block.text||'')}</textarea>
-        <div class="cblock-controls">
-          ${i>0?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},-1)" title="Move up">↑</button>`:''}
-          ${i<contentBlocks.length-1?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},1)" title="Move down">↓</button>`:''}
-          <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
-        </div>`;
+      // Use DOM to set textarea value — avoids HTML entity issues
+      const ta=document.createElement('textarea');
+      ta.placeholder='Write your notes, steps, tips…';
+      ta.value=block.text||'';
+      ta.addEventListener('input',function(){ contentBlocks[i].text=this.value; });
+      div.appendChild(ta);
+      const ctrl=document.createElement('div');
+      ctrl.innerHTML=controls;
+      div.appendChild(ctrl.firstElementChild);
+
     } else if (block.type==='image') {
+      div.className+=' cblock-img';
       if (block.preview||block.url) {
-        div.className+=' cblock-img';
-        div.innerHTML=`
-          <img src="${esc(block.preview||block.url)}" alt="step photo"/>
-          <input class="cblock-caption" type="text" placeholder="Add a caption (optional)…" value="${esc(block.caption||'')}" oninput="contentBlocks[${i}].caption=this.value"/>
-          <div class="cblock-controls">
-            ${i>0?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},-1)" title="Move up">↑</button>`:''}
-            ${i<contentBlocks.length-1?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},1)" title="Move down">↓</button>`:''}
-            <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
-          </div>`;
+        const img=document.createElement('img');
+        img.src=block.preview||block.url;
+        img.alt='step photo';
+        div.appendChild(img);
+        const cap=document.createElement('input');
+        cap.className='cblock-caption';
+        cap.type='text';
+        cap.placeholder='Add a caption (optional)…';
+        cap.value=block.caption||'';
+        cap.addEventListener('input',function(){ contentBlocks[i].caption=this.value; });
+        div.appendChild(cap);
+        const ctrl=document.createElement('div');
+        ctrl.innerHTML=controls;
+        div.appendChild(ctrl.firstElementChild);
       } else {
-        // Empty image slot — show uploader
-        div.className+=' cblock-img';
-        div.style.cssText='border:2.5px dashed var(--border);background:var(--bg);padding:1.25rem;text-align:center;cursor:pointer;border-radius:var(--r-sm)';
-        div.innerHTML=`
-          <input type="file" accept="image/*" style="display:none" id="cblock-file-${i}" onchange="handleBlockFile(event,${i})"/>
-          <div style="font-size:1.5rem;margin-bottom:.3rem">📷</div>
-          <div style="font-size:.8rem;color:var(--ink-muted);font-weight:600">Click to choose a photo</div>
-          <div class="cblock-controls">
-            <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
-          </div>`;
-        div.addEventListener('click', e=>{ if(!e.target.closest('.cblock-btn')) document.getElementById(`cblock-file-${i}`).click(); });
+        // Empty image slot — file picker
+        div.style.cssText='border:2.5px dashed var(--border);background:var(--bg);padding:1.25rem;text-align:center;cursor:pointer;border-radius:var(--r-sm);position:relative';
+        const fileInp=document.createElement('input');
+        fileInp.type='file'; fileInp.accept='image/*'; fileInp.style.display='none';
+        fileInp.id=`cblock-file-${i}`;
+        fileInp.addEventListener('change',function(e){ handleBlockFile(e,i); });
+        div.appendChild(fileInp);
+        const icon=document.createElement('div');
+        icon.style.cssText='font-size:1.5rem;margin-bottom:.3rem'; icon.textContent='📷';
+        div.appendChild(icon);
+        const lbl=document.createElement('div');
+        lbl.style.cssText='font-size:.8rem;color:var(--ink-muted);font-weight:600'; lbl.textContent='Click to choose a photo';
+        div.appendChild(lbl);
+        const ctrl=document.createElement('div');
+        ctrl.innerHTML=`<div class="cblock-controls"><button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button></div>`;
+        div.appendChild(ctrl.firstElementChild);
+        div.addEventListener('click',function(e){ if(!e.target.closest('.cblock-btn')) fileInp.click(); });
       }
     }
     editor.appendChild(div);
@@ -932,39 +957,39 @@ function moveBlock(idx, dir) {
 
 // ── Modal open/close ──────────────────────────
 function openModal(id=null) {
-  editId=id;
-  const r=id?recipes.find(x=>x.id===id):null;
-  document.getElementById('modal-title').textContent=id?'Edit recipe ✏️':'New recipe 🎉';
-  document.getElementById('f-name').value=r?r.name:'';
-  document.getElementById('f-cat').value=r?r.category:'Dinner';
-
-  // Rating — must set before renderStars
-  formRating=r?(r.rating||0):0;
-
-  // Load content blocks from recipe, or start with one empty text block
-  contentBlocks = r&&r.blocks&&r.blocks.length
-    ? r.blocks.map(b=>({...b}))
-    : [{type:'text',text:''}];
-
-  // Top-level photos tray is gone — photos now live in blocks
-  // But we keep r.photos as the hero gallery, shown separately in blog view
-  // For editing, we surface them as image blocks prepended if any exist standalone
-  document.getElementById('upload-status').textContent='';
-  document.getElementById('save-btn').disabled=false;
-  renderStars();
-  renderContentEditor();
-  document.getElementById('overlay').classList.add('open');
-  setTimeout(()=>document.getElementById('f-name').focus(),200);
+  try {
+    editId=id;
+    const r=id?recipes.find(x=>x.id===id):null;
+    document.getElementById('modal-title').textContent=id?'Edit recipe ✏️':'New recipe 🎉';
+    document.getElementById('f-name').value=r?r.name:'';
+    document.getElementById('f-cat').value=r?r.category:'Dinner';
+    formRating=r?(r.rating||0):0;
+    contentBlocks = r&&r.blocks&&r.blocks.length
+      ? r.blocks.map(b=>({...b}))
+      : [{type:'text',text:''}];
+    const statusEl=document.getElementById('upload-status');
+    if (statusEl) { statusEl.textContent=''; }
+    document.getElementById('save-btn').disabled=false;
+    document.getElementById('save-btn').textContent='Save recipe 🍽';
+    renderStars();
+    renderContentEditor();
+    document.getElementById('overlay').classList.add('open');
+    setTimeout(()=>{ const fn=document.getElementById('f-name'); if(fn) fn.focus(); },200);
+  } catch(err) {
+    console.error('openModal error:', err);
+    alert('Could not open the recipe form: '+err.message);
+  }
 }
 function openEdit(id){openModal(id);}
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
 function handleOvClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
-// Keep top-level photo drop zone working for hero photos
-function handlePhotoFile(e){ addHeroFiles(Array.from(e.target.files)); e.target.value=''; }
+// These are kept for any drag-drop onto the modal overlay
+function handlePhotoFile(e){ addHeroFiles(Array.from(e.target.files)); if(e.target) e.target.value=''; }
 function handleDrop(e){
   e.preventDefault();
-  document.getElementById('photo-drop').classList.remove('drag');
+  const el = document.getElementById('photo-drop');
+  if (el) el.classList.remove('drag');
   addHeroFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));
 }
 function addHeroFiles(files) {
