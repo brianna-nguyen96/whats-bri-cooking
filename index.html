@@ -463,12 +463,22 @@ document.addEventListener('keydown', e => {
 });
 
 // ── Supabase helpers ──────────────────────────
-function sbHeaders() {
-  return {'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'};
+function sbHeaders(extra={}) {
+  return {
+    'apikey': SUPABASE_KEY,
+    'Authorization': `Bearer ${SUPABASE_KEY}`,
+    'Content-Type': 'application/json',
+    ...extra
+  };
 }
 async function sbFetch(path, opts={}) {
-  const res = await fetch(SUPABASE_URL+path, {...opts, headers:{...sbHeaders(),...(opts.headers||{})}});
-  if (!res.ok) throw new Error(await res.text());
+  const isWrite = opts.method && opts.method !== 'GET';
+  const headers = sbHeaders(isWrite ? {'Prefer':'return=representation'} : {});
+  const res = await fetch(SUPABASE_URL+path, {...opts, headers:{...headers,...(opts.headers||{})}});
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Supabase error ${res.status}: ${errText}`);
+  }
   return res.status===204 ? null : res.json();
 }
 async function uploadPhoto(file) {
@@ -511,10 +521,14 @@ function lsSave() { localStorage.setItem(LS_KEY, JSON.stringify(recipes)); }
 async function saveToDb(data, id=null) {
   if (useSupabase) {
     if (id) {
-      const res = await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'PATCH', body:JSON.stringify(data)});
+      // PATCH existing — send data without id field
+      const {id:_omit, ...patchData} = data;
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'PATCH', body:JSON.stringify(patchData)});
       return Array.isArray(res) ? res[0] : res;
     } else {
-      const res = await sbFetch(`/rest/v1/${TABLE_NAME}`, {method:'POST', body:JSON.stringify(data)});
+      // INSERT new — never send id, let Supabase generate it
+      const {id:_omit, ...insertData} = data;
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}`, {method:'POST', body:JSON.stringify(insertData)});
       return Array.isArray(res) ? res[0] : res;
     }
   } else {
@@ -579,7 +593,20 @@ async function init() {
   useSupabase = !!(SUPABASE_URL && SUPABASE_KEY);
   if (!useSupabase) document.getElementById('config-banner').style.display='block';
   showLoading();
-  try { await loadRecipes(); } catch(e) { console.error(e); recipes=[]; }
+  try {
+    await loadRecipes();
+  } catch(e) {
+    console.error('Load error:', e);
+    recipes=[];
+    document.getElementById('card-grid').innerHTML=`
+      <div class="empty" style="grid-column:1/-1">
+        <div class="big">⚠️</div>
+        <p style="color:var(--tomato);font-weight:700;margin-bottom:.5rem">Could not load recipes</p>
+        <p style="font-size:.8rem;color:var(--ink-muted)">${e.message}</p>
+      </div>`;
+    render();
+    return;
+  }
   render();
 }
 function showLoading() {
@@ -1009,6 +1036,7 @@ async function saveRecipe() {
     closeModal();
     render();
   } catch(err) {
+    console.error('Save error:', err);
     status.style.color='var(--tomato)';
     status.textContent='Error: '+err.message;
     btn.disabled=false; btn.textContent='Save recipe 🍽';
