@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What's Bri Cooking</title>
+<title>My Recipe Blog</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -221,6 +221,33 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 .star-picker button:hover{transform:scale(1.2)}
 .modal-foot{display:flex;gap:.75rem;justify-content:flex-end;margin-top:1.5rem;padding-top:1rem;border-top:2px solid var(--border)}
 
+/* ── CONTENT BLOCKS EDITOR ── */
+.content-editor{display:flex;flex-direction:column;gap:.6rem}
+.cblock{position:relative;border-radius:var(--r-sm);overflow:hidden}
+.cblock-text textarea{width:100%;padding:.7rem .9rem;border:2px solid var(--border);border-radius:var(--r-sm);font-family:'Nunito',sans-serif;font-size:.9rem;background:var(--bg);color:var(--ink);outline:none;transition:border-color .15s;resize:vertical;min-height:80px;line-height:1.65}
+.cblock-text textarea:focus{border-color:var(--tomato)}
+.cblock-img{position:relative;border:2px solid var(--border);border-radius:var(--r-sm);overflow:hidden;background:#EEE8E0}
+.cblock-img img{width:100%;max-height:220px;object-fit:cover;display:block}
+.cblock-img .cblock-caption{width:100%;padding:.45rem .75rem;border:none;border-top:2px solid var(--border);font-family:'Nunito',sans-serif;font-size:.8rem;background:var(--bg);color:var(--ink-mid);outline:none}
+.cblock-img .cblock-caption::placeholder{color:var(--ink-muted)}
+.cblock-controls{position:absolute;top:6px;right:6px;display:flex;gap:4px;z-index:2}
+.cblock-btn{width:24px;height:24px;border-radius:50%;border:none;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;background:rgba(26,18,8,.65);color:#fff;transition:background .12s;padding:0}
+.cblock-btn:hover{background:var(--tomato)}
+.cblock-btn.move{background:rgba(26,18,8,.45)}
+.cblock-btn.move:hover{background:rgba(26,18,8,.75)}
+.add-block-row{display:flex;gap:.5rem;margin-top:.25rem}
+.add-block-btn{flex:1;padding:.5rem;border:2px dashed var(--border);border-radius:var(--r-sm);background:transparent;font-family:'Nunito',sans-serif;font-size:.78rem;font-weight:700;color:var(--ink-muted);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:.35rem}
+.add-block-btn:hover{border-color:var(--tomato);color:var(--tomato);background:var(--tomato-lt)}
+
+/* ── BLOG INLINE CONTENT ── */
+.blog-content{font-size:1rem;line-height:1.9;color:var(--ink-mid)}
+.blog-content-text{white-space:pre-wrap;margin-bottom:.75rem}
+.blog-content-text:last-child{margin-bottom:0}
+.blog-inline-img{margin:1.25rem 0;border-radius:var(--r-sm);overflow:hidden;border:2px solid var(--border)}
+.blog-inline-img img{width:100%;max-height:520px;object-fit:cover;display:block;cursor:pointer;transition:transform .2s}
+.blog-inline-img img:hover{transform:scale(1.005)}
+.blog-inline-caption{padding:.5rem 1rem;font-size:.8rem;color:var(--ink-muted);font-style:italic;background:var(--bg);border-top:2px solid var(--border)}
+
 /* PW PANEL */
 #pw-panel{display:none;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:2rem;max-width:420px}
 #pw-panel h3{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:1rem}
@@ -361,26 +388,16 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
       </select>
     </div>
     <div class="field">
-      <label>Photos <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-muted)">— drag thumbnails to reorder</span></label>
-      <div class="photo-drop" id="photo-drop"
-        ondragover="event.preventDefault();this.classList.add('drag')"
-        ondragleave="this.classList.remove('drag')"
-        ondrop="handleDrop(event)"
-        onclick="document.getElementById('f-photo').click()">
-        <input type="file" id="f-photo" accept="image/*" multiple onchange="handlePhotoFile(event)"/>
-        <div style="font-size:2rem;margin-bottom:.4rem">📷</div>
-        <div class="photo-txt" id="photo-txt">Click or drag photos here (multiple OK)</div>
-      </div>
-      <div class="photo-tray" id="photo-tray"></div>
-      <div class="upload-status" id="upload-status"></div>
-    </div>
-    <div class="field">
       <label>Your rating</label>
       <div class="star-picker" id="star-picker"></div>
     </div>
     <div class="field">
-      <label>Notes &amp; thoughts</label>
-      <textarea id="f-notes" placeholder="What did you love? What would you tweak? Tips for next time…"></textarea>
+      <label>Notes &amp; photos <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-muted)">— mix text and images in any order</span></label>
+      <div class="content-editor" id="content-editor"></div>
+      <div class="add-block-row">
+        <button type="button" class="add-block-btn" onclick="addTextBlock()">＋ Text</button>
+        <button type="button" class="add-block-btn" onclick="addImageBlock()">📷 Photo</button>
+      </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
@@ -400,12 +417,12 @@ main{max-width:1100px;margin:0 auto;padding:2rem 1.25rem 5rem}
 
 <script>
 // ─────────────────────────────────────────────────
-//  CONFIGURATION — fill these in after Supabase setup
+//  CONFIGURATION
 // ─────────────────────────────────────────────────
-const SUPABASE_URL = 'https://hoehyqqsdybilzkozlgd.supabase.co';        // e.g. 'https://abcdefgh.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvZWh5cXFzZHliaWx6a296bGdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyOTg0MDAsImV4cCI6MjA4OTg3NDQwMH0.lFkx-kfh4X93KzmDIH-Ism7ihcSQo8BJ4ZH7AoXCe8w';        // your anon/public key
-const BUCKET_NAME  = 'recipe-photos';   // storage bucket name
-const TABLE_NAME   = 'recipes';         // table name
+const SUPABASE_URL = 'https://hoehyqqsdybilzkozlgd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhvZWh5cXFzZHliaWx6a296bGdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyOTg0MDAsImV4cCI6MjA4OTg3NDQwMH0.lFkx-kfh4X93Kz';
+const BUCKET_NAME  = 'recipe-photos';
+const TABLE_NAME   = 'recipes';
 // ─────────────────────────────────────────────────
 
 const PK = 'recipeblog_pw_v1';
@@ -417,37 +434,27 @@ let recipes = [];
 let editId = null;
 let filterCat = 'All';
 let formRating = 0;
-let hoverStar = 0;
 
-// pendingPhotos = array of {file, preview, url} — url set after upload
-let pendingPhotos = [];
-// dragSrc index for tray reorder
+// contentBlocks = array of {type:'text'|'image', text?, file?, preview?, url?, caption?}
+let contentBlocks = [];
 let dragSrcIdx = null;
-
 let currentView = 'grid';
 let useSupabase = false;
 
 // ── Lightbox ────────────────────────────────────
-let lbPhotos = [];
-let lbIdx = 0;
+let lbPhotos = [], lbIdx = 0;
 function lbOpen(photos, idx) {
   lbPhotos = photos; lbIdx = idx;
   document.getElementById('lightbox').classList.add('open');
   lbRender();
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
 function lbRender() {
   document.getElementById('lb-img').src = lbPhotos[lbIdx];
   document.getElementById('lb-counter').textContent = lbPhotos.length > 1 ? `${lbIdx+1} / ${lbPhotos.length}` : '';
 }
-function lbNav(dir) {
-  lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length;
-  lbRender();
-}
-function lbClose() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow='';
-}
+function lbNav(dir) { lbIdx = (lbIdx + dir + lbPhotos.length) % lbPhotos.length; lbRender(); }
+function lbClose() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('open')) return;
   if (e.key==='ArrowLeft') lbNav(-1);
@@ -455,54 +462,59 @@ document.addEventListener('keydown', e => {
   else if (e.key==='Escape') lbClose();
 });
 
-// ── Supabase helpers ───────────────────────────
+// ── Supabase helpers ──────────────────────────
 function sbHeaders() {
-  return {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation'};
+  return {'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=representation'};
 }
 async function sbFetch(path, opts={}) {
-  const res = await fetch(SUPABASE_URL + path, {...opts, headers: {...sbHeaders(), ...(opts.headers||{})}});
+  const res = await fetch(SUPABASE_URL+path, {...opts, headers:{...sbHeaders(),...(opts.headers||{})}});
   if (!res.ok) throw new Error(await res.text());
-  return res.status === 204 ? null : res.json();
+  return res.status===204 ? null : res.json();
 }
 async function uploadPhoto(file) {
   const ext = file.name.split('.').pop();
   const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
   const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${BUCKET_NAME}/${path}`, {
-    method: 'POST',
-    headers: {'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': file.type, 'x-upsert': 'true'},
+    method:'POST',
+    headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':file.type,'x-upsert':'true'},
     body: file
   });
   if (!res.ok) throw new Error('Photo upload failed');
   return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET_NAME}/${path}`;
 }
 
-// ── Data layer ─────────────────────────────────
+// ── Data layer ────────────────────────────────
 async function loadRecipes() {
   if (useSupabase) {
     const data = await sbFetch(`/rest/v1/${TABLE_NAME}?select=*&order=date.desc`);
-    recipes = (data || []).map(normalisePhotos);
+    recipes = (data||[]).map(normalise);
   } else {
     try {
       const r = localStorage.getItem(LS_KEY);
-      recipes = r ? JSON.parse(r).map(normalisePhotos) : seed();
+      recipes = r ? JSON.parse(r).map(normalise) : seed();
       if (!r) lsSave();
     } catch(e) { recipes = []; }
   }
 }
-// Ensure every recipe has a photos array (backwards compat with old photo_url)
-function normalisePhotos(r) {
-  if (r.photos && Array.isArray(r.photos)) return r;
-  if (r.photo_url) return {...r, photos: [r.photo_url]};
-  return {...r, photos: []};
+function normalise(r) {
+  // Ensure photos array (legacy compat)
+  if (!r.photos || !Array.isArray(r.photos)) {
+    r.photos = r.photo_url ? [r.photo_url] : [];
+  }
+  // Ensure content blocks (legacy compat: convert old notes string)
+  if (!r.blocks || !Array.isArray(r.blocks)) {
+    r.blocks = r.notes ? [{type:'text', text: r.notes}] : [];
+  }
+  return r;
 }
 function lsSave() { localStorage.setItem(LS_KEY, JSON.stringify(recipes)); }
 async function saveToDb(data, id=null) {
   if (useSupabase) {
     if (id) {
-      const res = await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'PATCH', body: JSON.stringify(data)});
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}?id=eq.${id}`, {method:'PATCH', body:JSON.stringify(data)});
       return Array.isArray(res) ? res[0] : res;
     } else {
-      const res = await sbFetch(`/rest/v1/${TABLE_NAME}`, {method:'POST', body: JSON.stringify(data)});
+      const res = await sbFetch(`/rest/v1/${TABLE_NAME}`, {method:'POST', body:JSON.stringify(data)});
       return Array.isArray(res) ? res[0] : res;
     }
   } else {
@@ -510,7 +522,7 @@ async function saveToDb(data, id=null) {
       const i = recipes.findIndex(x=>x.id===id);
       if (i>-1) { recipes[i]={...recipes[i],...data}; lsSave(); return recipes[i]; }
     } else {
-      const r = {id: uid(), ...data};
+      const r = {id:uid(), ...data};
       recipes.unshift(r); lsSave(); return r;
     }
   }
@@ -522,34 +534,33 @@ async function deleteFromDb(id) {
     recipes = recipes.filter(x=>x.id!==id); lsSave();
   }
 }
-
 function seed() {
   return [
-    {id:uid(),name:'Shakshuka',category:'Breakfast',rating:5,notes:'Perfect Sunday dish. Extra harissa for heat — loved it. Try crumbled feta on top next time.',date:'2026-03-10',photos:[]},
-    {id:uid(),name:'Lemon Garlic Pasta',category:'Dinner',rating:4,notes:'Bright and fast. Reserve more pasta water — sauce was a touch thick.',date:'2026-03-15',photos:[]},
-    {id:uid(),name:'Banana Bread',category:'Dessert',rating:5,notes:'Very ripe bananas are non-negotiable. Walnuts add perfect crunch. Double the batch next time!',date:'2026-03-18',photos:[]}
+    {id:uid(),name:'Shakshuka',category:'Breakfast',rating:5,blocks:[{type:'text',text:'Perfect Sunday dish. Extra harissa for heat — loved it. Try crumbled feta on top next time.'}],photos:[],date:'2026-03-10'},
+    {id:uid(),name:'Lemon Garlic Pasta',category:'Dinner',rating:4,blocks:[{type:'text',text:'Bright and fast. Reserve more pasta water — sauce was a touch thick.'}],photos:[],date:'2026-03-15'},
+    {id:uid(),name:'Banana Bread',category:'Dessert',rating:5,blocks:[{type:'text',text:'Very ripe bananas are non-negotiable. Walnuts add perfect crunch. Double the batch next time!'}],photos:[],date:'2026-03-18'}
   ];
 }
 function uid() { return Date.now().toString(36)+Math.random().toString(36).slice(2); }
 
-// ── Auth ───────────────────────────────────────
+// ── Auth ──────────────────────────────────────
 function getPw() { return localStorage.getItem(PK)||'recipes'; }
 function checkPw() {
   const v = document.getElementById('pw-in').value;
-  if (v === getPw()) {
-    document.getElementById('lock').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
+  if (v===getPw()) {
+    document.getElementById('lock').style.display='none';
+    document.getElementById('app').style.display='block';
     init();
   } else {
-    document.getElementById('lock-err').textContent = 'Wrong password, try again.';
-    document.getElementById('pw-in').value = '';
+    document.getElementById('lock-err').textContent='Wrong password, try again.';
+    document.getElementById('pw-in').value='';
     document.getElementById('pw-in').focus();
   }
 }
-document.getElementById('pw-in').addEventListener('keydown', e => { if (e.key==='Enter') checkPw(); });
+document.getElementById('pw-in').addEventListener('keydown', e=>{ if(e.key==='Enter') checkPw(); });
 function togglePwPanel() {
-  const p = document.getElementById('pw-panel');
-  p.style.display = p.style.display==='block' ? 'none' : 'block';
+  const p=document.getElementById('pw-panel');
+  p.style.display=p.style.display==='block'?'none':'block';
   document.getElementById('pw-msg').textContent='';
 }
 function savePw() {
@@ -563,7 +574,7 @@ function savePw() {
   setTimeout(togglePwPanel,1500);
 }
 
-// ── Init ───────────────────────────────────────
+// ── Init ─────────────────────────────────────
 async function init() {
   useSupabase = !!(SUPABASE_URL && SUPABASE_KEY);
   if (!useSupabase) document.getElementById('config-banner').style.display='block';
@@ -572,20 +583,20 @@ async function init() {
   render();
 }
 function showLoading() {
-  document.getElementById('card-grid').innerHTML = `<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>Loading recipes…</p></div>`;
+  document.getElementById('card-grid').innerHTML=`<div class="loading" style="grid-column:1/-1"><div class="spinner"></div><p>Loading recipes…</p></div>`;
 }
 
-// ── View toggle ────────────────────────────────
+// ── View toggle ───────────────────────────────
 function setView(v) {
-  currentView = v;
-  document.getElementById('tab-grid').classList.toggle('active', v==='grid');
-  document.getElementById('tab-blog').classList.toggle('active', v==='blog');
-  document.getElementById('card-grid').style.display = v==='grid' ? 'grid' : 'none';
-  document.getElementById('blog-feed').style.display = v==='blog' ? 'block' : 'none';
+  currentView=v;
+  document.getElementById('tab-grid').classList.toggle('active',v==='grid');
+  document.getElementById('tab-blog').classList.toggle('active',v==='blog');
+  document.getElementById('card-grid').style.display=v==='grid'?'grid':'none';
+  document.getElementById('blog-feed').style.display=v==='blog'?'block':'none';
   render();
 }
 
-// ── Render ─────────────────────────────────────
+// ── Helpers ───────────────────────────────────
 function starStr(n, sz) {
   let s='';
   for (let i=1;i<=5;i++) s+=`<span style="color:${i<=n?'#E8A020':'#DDD0BE'};${sz?'font-size:'+sz:''}">★</span>`;
@@ -595,13 +606,22 @@ function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').re
 function fmtDate(d) { return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
 function fmtDateShort(d) { return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
 
+// Pull a plain-text summary from blocks for search
+function blocksToText(blocks) {
+  return (blocks||[]).filter(b=>b.type==='text').map(b=>b.text||'').join(' ');
+}
+// Collect all image URLs from blocks
+function blocksToPhotos(blocks) {
+  return (blocks||[]).filter(b=>b.type==='image'&&b.url).map(b=>b.url);
+}
+
 function getFiltered() {
-  const srch = document.getElementById('srch').value.toLowerCase();
-  const srt  = document.getElementById('srt').value;
-  let list = recipes.filter(r => {
-    const mc = filterCat==='All' || r.category===filterCat;
-    const ms = r.name.toLowerCase().includes(srch) || (r.notes||'').toLowerCase().includes(srch);
-    return mc && ms;
+  const srch=document.getElementById('srch').value.toLowerCase();
+  const srt=document.getElementById('srt').value;
+  let list=recipes.filter(r=>{
+    const mc=filterCat==='All'||r.category===filterCat;
+    const ms=r.name.toLowerCase().includes(srch)||(blocksToText(r.blocks)).toLowerCase().includes(srch);
+    return mc&&ms;
   });
   if (srt==='newest')      list.sort((a,b)=>b.date.localeCompare(a.date));
   else if (srt==='oldest') list.sort((a,b)=>a.date.localeCompare(b.date));
@@ -611,18 +631,17 @@ function getFiltered() {
 }
 
 function render() {
-  const list = getFiltered();
-  const srch = document.getElementById('srch').value;
+  const list=getFiltered();
+  const srch=document.getElementById('srch').value;
+  document.getElementById('hdr-count').textContent=`${recipes.length} recipe${recipes.length!==1?'s':''}`;
 
-  document.getElementById('hdr-count').textContent = `${recipes.length} recipe${recipes.length!==1?'s':''}`;
-
-  const avg = recipes.length ? (recipes.reduce((s,r)=>s+r.rating,0)/recipes.length).toFixed(1) : '—';
-  const topCat = (() => {
+  const avg=recipes.length?(recipes.reduce((s,r)=>s+(r.rating||0),0)/recipes.length).toFixed(1):'—';
+  const topCat=(()=>{
     if (!recipes.length) return '—';
     const c={}; recipes.forEach(r=>c[r.category]=(c[r.category]||0)+1);
     return Object.entries(c).sort((a,b)=>b[1]-a[1])[0][0];
   })();
-  const withPhotos = recipes.filter(r=>r.photos&&r.photos.length).length;
+  const withPhotos=recipes.filter(r=>r.photos&&r.photos.length).length;
   document.getElementById('stats').innerHTML=`
     <div class="hstat" data-emoji="🍽"><div class="hstat-label">Recipes</div><div class="hstat-val">${recipes.length}</div></div>
     <div class="hstat" data-emoji="⭐"><div class="hstat-label">Avg rating</div><div class="hstat-val">${avg}</div></div>
@@ -630,23 +649,32 @@ function render() {
     <div class="hstat" data-emoji="🏆"><div class="hstat-label">Top category</div><div class="hstat-val" style="font-size:1rem;padding-top:4px">${topCat}</div></div>
   `;
 
-  const avail = ['All', ...CATS.filter(c=>recipes.some(r=>r.category===c))];
-  document.getElementById('pills').innerHTML = avail.map(c => {
-    const cnt = c==='All' ? recipes.length : recipes.filter(r=>r.category===c).length;
+  const avail=['All',...CATS.filter(c=>recipes.some(r=>r.category===c))];
+  document.getElementById('pills').innerHTML=avail.map(c=>{
+    const cnt=c==='All'?recipes.length:recipes.filter(r=>r.category===c).length;
     return `<button class="pill${filterCat===c?' active':''}" onclick="setFilter('${c}')">${c==='All'?'✨ ':EMOJI[c]+' '}${c} <span style="opacity:.6">${cnt}</span></button>`;
   }).join('');
 
-  if (currentView === 'grid') renderGrid(list, srch);
+  if (currentView==='grid') renderGrid(list, srch);
   else renderBlog(list, srch);
 }
 
-// ── Card gallery widget ────────────────────────
+// ── Card gallery ──────────────────────────────
+function allPhotosForRecipe(r) {
+  const fromBlocks = blocksToPhotos(r.blocks||[]);
+  const fromPhotos = r.photos||[];
+  // Combine, deduplicate
+  const seen=new Set(); const all=[];
+  [...fromPhotos,...fromBlocks].forEach(u=>{ if(!seen.has(u)){seen.add(u);all.push(u);} });
+  return all;
+}
+
 function cardGalleryHTML(r) {
-  const photos = r.photos || [];
+  const photos=allPhotosForRecipe(r);
   if (!photos.length) {
     return `<div class="rcard-nophoto">${EMOJI[r.category]||'🍴'}<span>No photo yet</span></div>`;
   }
-  if (photos.length === 1) {
+  if (photos.length===1) {
     return `<div class="rcard-gallery" id="cg-${r.id}" data-idx="0" data-photos='${JSON.stringify(photos).replace(/'/g,"&#39;")}'>
       <img src="${esc(photos[0])}" alt="${esc(r.name)}" loading="lazy" data-gallery-img style="cursor:zoom-in" onclick="lbOpen(JSON.parse(this.closest('.rcard-gallery').dataset.photos),0)"/>
     </div>`;
@@ -660,35 +688,23 @@ function cardGalleryHTML(r) {
       <span class="photo-count-badge">📷 ${photos.length}</span>
     </div>`;
 }
-
-function cgInit() {
-  // set dataset on each gallery after DOM insert
-  document.querySelectorAll('[id^="cg-"]').forEach(el => {
-    const rid = el.id.slice(3);
-    const r = recipes.find(x=>x.id===rid);
-    if (!r) return;
-    el.dataset.photos = JSON.stringify(r.photos);
-    el.dataset.idx = '0';
-  });
+function cgNav(rid,dir) {
+  const el=document.getElementById('cg-'+rid);
+  const photos=JSON.parse(el.dataset.photos);
+  cgSet(rid,(parseInt(el.dataset.idx)+dir+photos.length)%photos.length);
 }
-function cgNav(rid, dir) {
-  const el = document.getElementById('cg-'+rid);
-  const photos = JSON.parse(el.dataset.photos);
-  let idx = (parseInt(el.dataset.idx) + dir + photos.length) % photos.length;
-  cgSet(rid, idx);
-}
-function cgSet(rid, idx) {
-  const el = document.getElementById('cg-'+rid);
-  const photos = JSON.parse(el.dataset.photos);
-  el.dataset.idx = idx;
-  el.querySelector('[data-gallery-img]').src = photos[idx];
+function cgSet(rid,idx) {
+  const el=document.getElementById('cg-'+rid);
+  const photos=JSON.parse(el.dataset.photos);
+  el.dataset.idx=idx;
+  el.querySelector('[data-gallery-img]').src=photos[idx];
   el.querySelectorAll('.gdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
 }
 
 function renderGrid(list, srch) {
-  const el = document.getElementById('card-grid');
-  if (!list.length) { el.innerHTML=emptyHTML(srch); return; }
-  el.innerHTML = list.map(r => `
+  const el=document.getElementById('card-grid');
+  if (!list.length){el.innerHTML=emptyHTML(srch);return;}
+  el.innerHTML=list.map(r=>`
     <div class="rcard">
       ${cardGalleryHTML(r)}
       <div class="rcard-body">
@@ -697,10 +713,10 @@ function renderGrid(list, srch) {
           <span class="cat-chip chip-${r.category}">${r.category}</span>
         </div>
         <div class="rcard-meta">
-          <div class="rcard-stars">${starStr(r.rating)}</div>
+          <div class="rcard-stars">${starStr(r.rating||0)}</div>
           <div class="rcard-date">${fmtDateShort(r.date)}</div>
         </div>
-        ${r.notes ? `<div class="rcard-notes">${esc(r.notes)}</div>` : ''}
+        ${blocksToText(r.blocks)?`<div class="rcard-notes">${esc(blocksToText(r.blocks).slice(0,140))}${blocksToText(r.blocks).length>140?'…':''}</div>`:''}
       </div>
       <div class="rcard-actions">
         <button onclick="openEdit('${r.id}')">✏️ Edit</button>
@@ -708,122 +724,208 @@ function renderGrid(list, srch) {
       </div>
     </div>
   `).join('');
-  cgInit();
 }
 
-// ── Blog gallery HTML ──────────────────────────
-function blogGalleryHTML(r) {
-  const photos = r.photos || [];
-  if (!photos.length) {
-    return `<div class="blog-nophoto">${EMOJI[r.category]||'🍴'}</div>`;
-  }
-  const photosAttr = JSON.stringify(photos).replace(/'/g,"&#39;");
-  const cls = photos.length===1?'count-1':photos.length===2?'count-2':photos.length===3?'count-3':photos.length===4?'count-4':'count-many';
-  const visible = photos.length <= 5 ? photos : photos.slice(0,5);
-  return `<div class="blog-gallery ${cls}" data-photos='${photosAttr}'>${visible.map((url,i)=>`<img src="${esc(url)}" alt="${esc(r.name)} photo ${i+1}" loading="lazy" onclick="lbOpen(JSON.parse(this.closest('.blog-gallery').dataset.photos),${i})"/>`).join('')}</div>`;
+// ── Blog inline content renderer ──────────────
+function renderBlocksHTML(blocks, allPhotos) {
+  if (!blocks||!blocks.length) return '';
+  return blocks.map(b=>{
+    if (b.type==='text') {
+      return b.text ? `<div class="blog-content-text">${esc(b.text)}</div>` : '';
+    } else if (b.type==='image' && b.url) {
+      const photosAttr=JSON.stringify(allPhotos).replace(/'/g,"&#39;");
+      const idx=allPhotos.indexOf(b.url);
+      return `<div class="blog-inline-img">
+        <img src="${esc(b.url)}" alt="step photo" loading="lazy" onclick="lbOpen(JSON.parse(this.closest('.blog-inline-img').dataset.photos),${idx>=0?idx:0})" data-photos='${photosAttr}'/>
+        ${b.caption?`<div class="blog-inline-caption">${esc(b.caption)}</div>`:''}
+      </div>`;
+    }
+    return '';
+  }).join('');
 }
 
 function renderBlog(list, srch) {
-  const el = document.getElementById('blog-feed');
-  if (!list.length) { el.innerHTML=`<div class="empty"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`; return; }
-  el.innerHTML = list.map(r => `
-    <article class="blog-post">
-      ${blogGalleryHTML(r)}
+  const el=document.getElementById('blog-feed');
+  if (!list.length){el.innerHTML=`<div class="empty"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`;return;}
+  el.innerHTML=list.map(r=>{
+    const heroPhotos=r.photos&&r.photos.length?r.photos:[];
+    const allPhotos=allPhotosForRecipe(r);
+    const hasHero=heroPhotos.length>0;
+    const heroHTML=hasHero
+      ? (heroPhotos.length===1
+          ? `<div class="blog-gallery count-1" data-photos='${JSON.stringify(heroPhotos).replace(/'/g,"&#39;")}'><img src="${esc(heroPhotos[0])}" alt="${esc(r.name)}" loading="lazy" onclick="lbOpen(JSON.parse(this.closest('.blog-gallery').dataset.photos),0)"/></div>`
+          : `<div class="blog-gallery ${heroPhotos.length===2?'count-2':heroPhotos.length===3?'count-3':heroPhotos.length===4?'count-4':'count-many'}" data-photos='${JSON.stringify(heroPhotos).replace(/'/g,"&#39;")}'>${heroPhotos.slice(0,5).map((url,i)=>`<img src="${esc(url)}" alt="${esc(r.name)}" loading="lazy" onclick="lbOpen(JSON.parse(this.closest('.blog-gallery').dataset.photos),${i})"/>`).join('')}</div>`)
+      : `<div class="blog-nophoto">${EMOJI[r.category]||'🍴'}</div>`;
+
+    return `<article class="blog-post">
+      ${heroHTML}
       <div class="blog-body">
         <div class="blog-meta">
           <span class="cat-chip chip-${r.category}">${r.category}</span>
           <span class="blog-date">${fmtDate(r.date)}</span>
-          ${r.photos&&r.photos.length>1?`<span style="font-size:.75rem;color:var(--ink-muted)">📷 ${r.photos.length} photos</span>`:''}
+          ${allPhotos.length>1?`<span style="font-size:.75rem;color:var(--ink-muted)">📷 ${allPhotos.length} photos</span>`:''}
         </div>
         <h2 class="blog-title">${esc(r.name)}</h2>
-        <div class="blog-stars">${starStr(r.rating,'1rem')}</div>
-        ${r.notes ? `
-          <hr class="blog-divider"/>
-          <div class="blog-notes-label">My notes</div>
-          <div class="blog-notes">${esc(r.notes)}</div>
-        ` : ''}
+        <div class="blog-stars">${starStr(r.rating||0,'1rem')}</div>
+        ${r.blocks&&r.blocks.length?`<hr class="blog-divider"/><div class="blog-content">${renderBlocksHTML(r.blocks,allPhotos)}</div>`:''}
       </div>
       <div class="blog-footer">
         <button class="btn btn-outline btn-sm" onclick="openEdit('${r.id}')">✏️ Edit</button>
         <button class="btn btn-sm" style="border:2px solid #EED8D0;color:#A05040;background:transparent;border-radius:99px;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer" onclick="del('${r.id}')">🗑 Delete</button>
       </div>
-    </article>
-  `).join('');
+    </article>`;
+  }).join('');
 }
 
 function emptyHTML(srch) {
   return `<div class="empty" style="grid-column:1/-1"><div class="big">🥣</div><p>${srch||filterCat!=='All'?'No recipes match your search.':'No recipes yet — add your first one!'}</p></div>`;
 }
-function setFilter(c) { filterCat=c; render(); }
+function setFilter(c){filterCat=c;render();}
 
-// ── Modal ──────────────────────────────────────
+// ── Star picker (fixed — no inline string closures) ──
 function renderStars() {
-  document.getElementById('star-picker').innerHTML = Array.from({length:5},(_,i) => {
-    const n=i+1, filled=hoverStar>=n||(!hoverStar&&formRating>=n);
-    return `<button type="button" onmouseenter="hoverStar=${n};renderStars()" onmouseleave="hoverStar=0;renderStars()" onclick="formRating=${n};renderStars()" style="color:${filled?'#E8A020':'#DDD0BE'}">★</button>`;
-  }).join('');
+  const picker=document.getElementById('star-picker');
+  picker.innerHTML='';
+  for (let n=1;n<=5;n++) {
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.textContent='★';
+    btn.style.fontSize='1.6rem';
+    btn.style.background='none';
+    btn.style.border='none';
+    btn.style.cursor='pointer';
+    btn.style.padding='0';
+    btn.style.lineHeight='1';
+    btn.style.transition='transform .1s';
+    btn.style.color=n<=formRating?'#E8A020':'#DDD0BE';
+    btn.addEventListener('mouseenter',()=>{
+      picker.querySelectorAll('button').forEach((b,i)=>b.style.color=i<n?'#E8A020':'#DDD0BE');
+    });
+    btn.addEventListener('mouseleave',()=>{
+      picker.querySelectorAll('button').forEach((b,i)=>b.style.color=i<formRating?'#E8A020':'#DDD0BE');
+    });
+    btn.addEventListener('click',()=>{
+      formRating=n;
+      picker.querySelectorAll('button').forEach((b,i)=>b.style.color=i<formRating?'#E8A020':'#DDD0BE');
+    });
+    picker.appendChild(btn);
+  }
 }
 
-// ── Photo Tray (multi-photo) ───────────────────
-function renderTray() {
-  const tray = document.getElementById('photo-tray');
-  tray.innerHTML = pendingPhotos.map((p, i) => `
-    <div class="ptile" draggable="true"
-      ondragstart="trayDragStart(${i})"
-      ondragover="event.preventDefault();trayDragOver(event,${i})"
-      ondragleave="trayDragLeave(event)"
-      ondrop="trayDrop(${i})"
-      ondragend="trayDragEnd()">
-      <img src="${p.preview}" alt="photo ${i+1}"/>
-      <button class="ptile-del" onclick="removePhoto(${i})" title="Remove">✕</button>
-      <span class="ptile-order">${i+1}</span>
-    </div>
-  `).join('') + `
-    <div class="ptile ptile-add" onclick="document.getElementById('f-photo').click()" title="Add more photos">＋</div>
-  `;
-  document.getElementById('photo-txt').textContent = pendingPhotos.length
-    ? `${pendingPhotos.length} photo${pendingPhotos.length!==1?'s':''} — drag to reorder, click + to add more`
-    : 'Click or drag photos here (multiple OK)';
+// ── Content block editor ──────────────────────
+function renderContentEditor() {
+  const editor=document.getElementById('content-editor');
+  editor.innerHTML='';
+  contentBlocks.forEach((block,i)=>{
+    const div=document.createElement('div');
+    div.className='cblock';
+    if (block.type==='text') {
+      div.className+=' cblock-text';
+      div.innerHTML=`
+        <textarea placeholder="Write your notes, steps, tips…" oninput="contentBlocks[${i}].text=this.value">${esc(block.text||'')}</textarea>
+        <div class="cblock-controls">
+          ${i>0?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},-1)" title="Move up">↑</button>`:''}
+          ${i<contentBlocks.length-1?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},1)" title="Move down">↓</button>`:''}
+          <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
+        </div>`;
+    } else if (block.type==='image') {
+      if (block.preview||block.url) {
+        div.className+=' cblock-img';
+        div.innerHTML=`
+          <img src="${esc(block.preview||block.url)}" alt="step photo"/>
+          <input class="cblock-caption" type="text" placeholder="Add a caption (optional)…" value="${esc(block.caption||'')}" oninput="contentBlocks[${i}].caption=this.value"/>
+          <div class="cblock-controls">
+            ${i>0?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},-1)" title="Move up">↑</button>`:''}
+            ${i<contentBlocks.length-1?`<button class="cblock-btn move" type="button" onclick="moveBlock(${i},1)" title="Move down">↓</button>`:''}
+            <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
+          </div>`;
+      } else {
+        // Empty image slot — show uploader
+        div.className+=' cblock-img';
+        div.style.cssText='border:2.5px dashed var(--border);background:var(--bg);padding:1.25rem;text-align:center;cursor:pointer;border-radius:var(--r-sm)';
+        div.innerHTML=`
+          <input type="file" accept="image/*" style="display:none" id="cblock-file-${i}" onchange="handleBlockFile(event,${i})"/>
+          <div style="font-size:1.5rem;margin-bottom:.3rem">📷</div>
+          <div style="font-size:.8rem;color:var(--ink-muted);font-weight:600">Click to choose a photo</div>
+          <div class="cblock-controls">
+            <button class="cblock-btn" type="button" onclick="removeBlock(${i})" title="Remove">✕</button>
+          </div>`;
+        div.addEventListener('click', e=>{ if(!e.target.closest('.cblock-btn')) document.getElementById(`cblock-file-${i}`).click(); });
+      }
+    }
+    editor.appendChild(div);
+  });
 }
 
-function removePhoto(idx) {
-  pendingPhotos.splice(idx, 1);
-  renderTray();
+function addTextBlock() {
+  contentBlocks.push({type:'text',text:''});
+  renderContentEditor();
+  // Focus the new textarea
+  setTimeout(()=>{
+    const tas=document.querySelectorAll('#content-editor .cblock-text textarea');
+    if (tas.length) tas[tas.length-1].focus();
+  },50);
 }
 
-// Tray drag-to-reorder
-function trayDragStart(idx) { dragSrcIdx = idx; }
-function trayDragOver(e, idx) {
-  e.preventDefault();
-  document.querySelectorAll('.ptile').forEach((t,i)=>t.classList.toggle('drag-over', i===idx && i!==dragSrcIdx));
-}
-function trayDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
-function trayDrop(toIdx) {
-  if (dragSrcIdx === null || dragSrcIdx === toIdx) return;
-  const moved = pendingPhotos.splice(dragSrcIdx, 1)[0];
-  pendingPhotos.splice(toIdx, 0, moved);
-  dragSrcIdx = null;
-  renderTray();
-}
-function trayDragEnd() {
-  document.querySelectorAll('.ptile').forEach(t=>t.classList.remove('drag-over','dragging'));
-  dragSrcIdx = null;
+function addImageBlock() {
+  contentBlocks.push({type:'image',file:null,preview:null,url:null,caption:''});
+  renderContentEditor();
+  // Auto-click the file input for the new block
+  setTimeout(()=>{
+    const idx=contentBlocks.length-1;
+    const inp=document.getElementById(`cblock-file-${idx}`);
+    if (inp) inp.click();
+  },80);
 }
 
+function handleBlockFile(e, idx) {
+  const file=e.target.files[0];
+  if (!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    contentBlocks[idx].file=file;
+    contentBlocks[idx].preview=ev.target.result;
+    contentBlocks[idx].url=null;
+    renderContentEditor();
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeBlock(idx) {
+  contentBlocks.splice(idx,1);
+  renderContentEditor();
+}
+
+function moveBlock(idx, dir) {
+  const to=idx+dir;
+  if (to<0||to>=contentBlocks.length) return;
+  const tmp=contentBlocks[idx]; contentBlocks[idx]=contentBlocks[to]; contentBlocks[to]=tmp;
+  renderContentEditor();
+}
+
+// ── Modal open/close ──────────────────────────
 function openModal(id=null) {
   editId=id;
   const r=id?recipes.find(x=>x.id===id):null;
-  document.getElementById('modal-title').textContent = id?'Edit recipe ✏️':'New recipe 🎉';
-  document.getElementById('f-name').value = r?r.name:'';
-  document.getElementById('f-cat').value  = r?r.category:'Dinner';
-  document.getElementById('f-notes').value= r?r.notes:'';
-  formRating=r?r.rating:0; hoverStar=0;
-  // Load existing photos into tray as-is (no file, just url/preview)
-  pendingPhotos = r && r.photos ? r.photos.map(url=>({file:null,preview:url,url})) : [];
+  document.getElementById('modal-title').textContent=id?'Edit recipe ✏️':'New recipe 🎉';
+  document.getElementById('f-name').value=r?r.name:'';
+  document.getElementById('f-cat').value=r?r.category:'Dinner';
+
+  // Rating — must set before renderStars
+  formRating=r?(r.rating||0):0;
+
+  // Load content blocks from recipe, or start with one empty text block
+  contentBlocks = r&&r.blocks&&r.blocks.length
+    ? r.blocks.map(b=>({...b}))
+    : [{type:'text',text:''}];
+
+  // Top-level photos tray is gone — photos now live in blocks
+  // But we keep r.photos as the hero gallery, shown separately in blog view
+  // For editing, we surface them as image blocks prepended if any exist standalone
   document.getElementById('upload-status').textContent='';
   document.getElementById('save-btn').disabled=false;
   renderStars();
-  renderTray();
+  renderContentEditor();
   document.getElementById('overlay').classList.add('open');
   setTimeout(()=>document.getElementById('f-name').focus(),200);
 }
@@ -831,62 +933,73 @@ function openEdit(id){openModal(id);}
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
 function handleOvClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
 
-function handlePhotoFile(e){ addPhotoFiles(Array.from(e.target.files)); e.target.value=''; }
+// Keep top-level photo drop zone working for hero photos
+function handlePhotoFile(e){ addHeroFiles(Array.from(e.target.files)); e.target.value=''; }
 function handleDrop(e){
   e.preventDefault();
   document.getElementById('photo-drop').classList.remove('drag');
-  const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
-  addPhotoFiles(files);
+  addHeroFiles(Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')));
 }
-
-function addPhotoFiles(files) {
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      pendingPhotos.push({file, preview: ev.target.result, url: null});
-      renderTray();
+function addHeroFiles(files) {
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      contentBlocks.push({type:'image',file,preview:ev.target.result,url:null,caption:''});
+      renderContentEditor();
     };
     reader.readAsDataURL(file);
   });
 }
 
+// ── Save ──────────────────────────────────────
 async function saveRecipe() {
   const name=document.getElementById('f-name').value.trim();
-  if(!name){document.getElementById('f-name').focus();return;}
+  if (!name){document.getElementById('f-name').focus();return;}
 
   const btn=document.getElementById('save-btn');
   btn.disabled=true; btn.textContent='Saving…';
   const status=document.getElementById('upload-status');
 
   try {
-    // Upload any new files, preserve existing urls
-    const finalPhotos = [];
-    let uploadCount = pendingPhotos.filter(p=>p.file).length;
-    let uploaded = 0;
-    for (const p of pendingPhotos) {
-      if (p.file) {
-        if (useSupabase) {
-          status.style.color='var(--ink-muted)';
-          status.textContent = `Uploading photo ${++uploaded} of ${uploadCount}…`;
-          const url = await uploadPhoto(p.file);
-          finalPhotos.push(url);
-        } else {
-          finalPhotos.push(p.preview); // base64 for localStorage
+    // Upload any new image blocks
+    let uploadCount=contentBlocks.filter(b=>b.type==='image'&&b.file).length;
+    let uploaded=0;
+    const finalBlocks=[];
+    for (const block of contentBlocks) {
+      if (block.type==='text') {
+        if (block.text&&block.text.trim()) finalBlocks.push({type:'text',text:block.text});
+      } else if (block.type==='image') {
+        if (block.file) {
+          let url;
+          if (useSupabase) {
+            status.style.color='var(--ink-muted)';
+            status.textContent=`Uploading photo ${++uploaded} of ${uploadCount}…`;
+            url=await uploadPhoto(block.file);
+          } else {
+            url=block.preview;
+          }
+          finalBlocks.push({type:'image',url,caption:block.caption||''});
+        } else if (block.url) {
+          finalBlocks.push({type:'image',url:block.url,caption:block.caption||''});
         }
-      } else if (p.url) {
-        finalPhotos.push(p.url);
       }
     }
 
-    const existing = editId ? recipes.find(x=>x.id===editId) : null;
-    const data = {
+    // Hero photos = first image block url (for card view cover)
+    const heroPhotos=finalBlocks.filter(b=>b.type==='image').map(b=>b.url);
+    // Plain text summary for search
+    const notesText=finalBlocks.filter(b=>b.type==='text').map(b=>b.text).join('\n\n');
+
+    const existing=editId?recipes.find(x=>x.id===editId):null;
+    const data={
       name,
       category: document.getElementById('f-cat').value,
       rating:   formRating,
-      notes:    document.getElementById('f-notes').value.trim(),
-      photos:   finalPhotos,
-      photo_url: finalPhotos[0] || null, // keep legacy field for Supabase compatibility
-      date:     existing?.date || new Date().toISOString().split('T')[0]
+      blocks:   finalBlocks,
+      photos:   heroPhotos,
+      photo_url: heroPhotos[0]||null,
+      notes:    notesText,
+      date:     existing?.date||new Date().toISOString().split('T')[0]
     };
 
     status.textContent='Saving recipe…';
@@ -902,16 +1015,18 @@ async function saveRecipe() {
   }
 }
 
-async function del(id){
-  if(!confirm('Remove this recipe?'))return;
+async function del(id) {
+  if (!confirm('Remove this recipe?')) return;
   try {
     await deleteFromDb(id);
-    if(useSupabase) await loadRecipes();
+    if (useSupabase) await loadRecipes();
     render();
   } catch(err){ alert('Could not delete: '+err.message); }
 }
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('lightbox').classList.contains('open'))closeModal();});
+document.addEventListener('keydown',e=>{
+  if (e.key==='Escape'&&!document.getElementById('lightbox').classList.contains('open')) closeModal();
+});
 </script>
 </body>
 </html>
