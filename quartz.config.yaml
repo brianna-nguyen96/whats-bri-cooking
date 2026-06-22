@@ -2,6 +2,8 @@
 configuration:
   pageTitle: What's Bri Cooking
   pageTitleSuffix: ""
+  additionalStyles:
+    - static/custom.css
   enableSPA: true
   enablePopovers: true
   analytics:
