@@ -15,10 +15,10 @@ configuration:
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
-      typography:
-        header: Fraunces
-        body: Nunito
-        code: IBM Plex Mono
+    typography:
+      header: Fraunces
+      body: Nunito
+      code: IBM Plex Mono
     colors:
       lightMode:
         light: "#F5F5FF"
@@ -262,7 +262,7 @@ plugins:
       name: quartz-themes
       repo: github:saberzero1/quartz-themes
       subdir: plugin
-    enabled: true
+    enabled: false
     options:
       theme: default
   - source: github:quartz-community/obsidian-plugin-excalidraw
