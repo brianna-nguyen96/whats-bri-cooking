@@ -1,5 +1,5 @@
 ---
-modified: 2026-06-22T15:39:18-07:00
+modified: 2026-06-22T15:46:28-07:00
 created: 2026-06-22T09:00:54-07:00
 publish: true
 ---
@@ -7,7 +7,7 @@ publish: true
 
 This Father's Day, I decided to return to a recipe that I had made when my parents visited me in Austin for Thanksgiving 2023. My parents and I aren't big on turkey for Thanksgiving, especially when it's just us three. I had made braised short ribs when they visited the year prior, so a rib roast seemed like a logical evolution to a fancy yet non-fussy holiday meal. The meal turned out phenomenally, it honestly seems much more intimidating than it really is - but I hadn't touched a rib roast for nearly three years since. Being back in San Diego for Father's Day seemed like the perfect excuse to attempt this again.
 
-I remember buying the original rib roast for about \$30//lb at Central Market, but when I went to buy the rib roast at Seaside Market this past week, they were being sold for \$25.99//lb. This pricing seems standard to me? I understand that I can probably get some more artisanal beef in the \$35 - 40 range at a specialty butcher shop, but this was the highest quality meat that was accessible to me. 
+I remember buying the original rib roast for about \$30/lb at Central Market, but when I went to buy the rib roast at Seaside Market this past week, they were being sold for \$25.99/lb. This pricing seems standard to me? I understand that I can probably get some more artisanal beef in the \$35 - 40 range at a specialty butcher shop, but this was the highest quality meat that was accessible to me. 
 
 The [recipe](https://www.alisoneroman.com/recipes/low-and-slow-rib-roast-with-anchovy-and-rosemary/) I use calls for a 3-bone roast (about 6 - 7½ lbs), and when I asked for the cut at the meat counter, the butcher told me it would be closer to 8 - 10 lbs. I decided to just do the 2-bone roast, but when the butcher cut the roast it ended up being 3 bones and also the perfect weight?? I'm not sure if this was a miscommunication, but I'm not complaining:
 
