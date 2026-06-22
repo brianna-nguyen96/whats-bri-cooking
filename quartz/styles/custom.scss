@@ -13,3 +13,9 @@ img[src$="#center"] {
   display: block;
   margin-inline: auto !important;
 }
+
+/* Keep explorer always visible */
+.explorer {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
