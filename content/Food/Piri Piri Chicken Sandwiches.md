@@ -1,5 +1,7 @@
 ---
-modified: 2026-06-21T16:11:58-07:00
+modified: 2026-06-21T21:11:51-07:00
+publish: true
+created: 2026-06-21T15:52:01-07:00
 ---
 
 Recipe from The Wishbone Kitchen Cookbook
