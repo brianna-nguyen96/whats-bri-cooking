@@ -1,7 +1,7 @@
 ---
-modified: 2026-06-21T23:09:54-07:00
+modified: 2026-06-22T08:32:17-07:00
 created: 2026-06-21T21:55:46-07:00
-publish: true
+publish: false
 ---
 I love blogs! Something about them feels so retro and chic, the permanence of a blog post vs. newsletter is so endearing to me. A blog is a living thing, and I love returning to my favorites after a long time away. This page is more to jot down what I like, lots of messy notes:
 
@@ -32,3 +32,5 @@ random blogs:
 	- indie web, posts on blogging
 - [Newcastle Eats](https://newcastleeats.co.uk)
 	- food writing in newcastle. kinda fun to see what's up
+- [brr](https://brr.fyi)
+	- living in antarctica

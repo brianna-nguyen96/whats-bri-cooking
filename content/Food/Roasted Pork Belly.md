@@ -1,5 +1,5 @@
 ---
-modified: 2026-06-21T21:12:18-07:00
+modified: 2026-06-22T08:49:56-07:00
 created: 2026-06-21T16:39:00-07:00
 publish: true
 ---
@@ -7,7 +7,7 @@ Recipe from Vietnamese by Uyen Luu
 
 ![[4DFD1B44-F6C2-4A38-BD61-B62CC0690002_1_105_c.jpeg|center|363]]
 
-As embarrassing as it is, I made this recipe because I was inspired by the cooking videos/vlogs of Diegodoal, a food content creator based in Spain. He went to Malaysia and encountered a roasted pork belly dish served with rice, and recreated it [here](https://youtu.be/ZXEHyaJWQ88?si=Ums5ok7z4wNLK8zK).
+As embarrassing as it is, I made this recipe because I was inspired by the cooking videos/vlogs of Diegodoal, a food content creator based in Spain. Having a daily goal of 90 minutes for Spanish learning means that short, concise cooking videos take up a lot of my watchtime. He went to Malaysia and encountered a roasted pork belly dish served with rice, and recreated it [here](https://youtu.be/ZXEHyaJWQ88?si=Ums5ok7z4wNLK8zK).
 
 My family most often eats roasted pork belly (*heo quay*) in bánh hỏi, but we usually buy it from Sieu Sieu BBQ, which my aunt insists has the best pork belly in all of San Diego. Last time we bought pork belly from Sieu Sieu, I remember paying around $18/lb. Pork belly is sold at the 99 Ranch meat counter for like, $7/lb - which seemed like a steal, especially because everything I saw pointed to roasted pork belly being soooo easy to make.
 
