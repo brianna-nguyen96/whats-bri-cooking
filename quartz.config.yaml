@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: What's Bri Cooking
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -15,21 +15,21 @@ configuration:
   theme:
     fontOrigin: googleFonts
     cdnCaching: true
-    typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      typography:
+        header: Fraunces
+        body: Nunito
+        code: IBM Plex Mono
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#F5F5FF"
+        lightgray: "#E8E8F5"
+        gray: "#B8B8D0"
+        darkgray: "#4A4A6A"
+        dark: "#1A1A3A"
+        secondary: "#6B6BB8"
+        tertiary: "#9090D0"
+        highlight: "rgba(107, 107, 184, 0.12)"
+        textHighlight: "#C5C5FF88"
       darkMode:
         light: "#161618"
         lightgray: "#393639"

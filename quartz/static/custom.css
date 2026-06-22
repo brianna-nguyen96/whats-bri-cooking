@@ -1,0 +1,72 @@
+/* ── Prism Periwinkle theme for Quartz ── */
+
+:root {
+  --light: #F5F5FF;
+  --lightgray: #E8E8F5;
+  --gray: #B8B8D0;
+  --darkgray: #4A4A6A;
+  --dark: #1A1A3A;
+  --secondary: #6B6BB8;
+  --tertiary: #9090D0;
+  --highlight: hsla(250, 100%, 95%, 0.8);
+  --textHighlight: hsla(250, 80%, 88%, 0.5);
+}
+
+/* Background */
+body {
+  background-color: var(--light);
+}
+
+/* Links */
+a {
+  color: var(--secondary);
+}
+a:hover {
+  color: var(--tertiary);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--dark);
+}
+
+/* Sidebar */
+#quartz-body .sidebar {
+  background-color: #EDEDFA;
+}
+
+/* Search bar */
+#search-bar {
+  background-color: var(--lightgray);
+  border: 1px solid var(--gray);
+}
+
+/* Graph view nodes */
+.graph-outer circle {
+  fill: var(--secondary);
+}
+
+/* Tags */
+.tag-link {
+  background-color: hsla(250, 100%, 95%, 1);
+  color: var(--secondary);
+  border: 1px solid var(--tertiary);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 3px solid var(--secondary);
+  background-color: var(--highlight);
+}
+
+/* Code blocks */
+pre {
+  background-color: #EDEDFA !important;
+}
+
+/* Active/hover nav items */
+.sidebar a:hover {
+  color: var(--secondary);
+}
