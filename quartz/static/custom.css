@@ -70,3 +70,16 @@ pre {
 .sidebar a:hover {
   color: var(--secondary);
 }
+
+css/* Center Images with |center in alt text */
+img[alt*="center"],
+.markdown-source-view .cm-content .image-embed[alt*="center"] {
+  display: block;
+  margin-inline: auto !important;
+}
+
+/* Center Images with #center added to the URL */
+img[src$="#center"] {
+  display: block;
+  margin-inline: auto !important;
+}
