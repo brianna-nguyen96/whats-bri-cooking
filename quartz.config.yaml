@@ -18,30 +18,9 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Fraunces
-      body: Nunito
+      header: Schibsted Grotesk
+      body: Source Sans Pro
       code: IBM Plex Mono
-    colors:
-      lightMode:
-        light: "#F5F5FF"
-        lightgray: "#E8E8F5"
-        gray: "#B8B8D0"
-        darkgray: "#4A4A6A"
-        dark: "#1A1A3A"
-        secondary: "#6B6BB8"
-        tertiary: "#9090D0"
-        highlight: "rgba(107, 107, 184, 0.12)"
-        textHighlight: "#C5C5FF88"
-      darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
 plugins:
   - source: github:quartz-community/created-modified-date
     enabled: true
