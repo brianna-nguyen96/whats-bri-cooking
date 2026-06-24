@@ -1,7 +1,7 @@
 ---
 publish: true
 created: 2026-06-23T08:46:30-07:00
-modified: 2026-06-23T17:15:22-07:00
+modified: 2026-06-23T17:47:05-07:00
 tags:
   - travel
   - spain
@@ -80,7 +80,7 @@ I must add a tearful note here and say I didn't get a chance to have any Basque 
   ![[Attachments/10ED1C4A-42D9-492D-A457-340EBF9A3839_1_105_c.jpeg|center|363]]
 - Carajillo at [Pokhara](https://maps.app.goo.gl/EbsbaYetN4cixt3TA)
   - My parents went off to the beach so my mom could go surfing, so I had time to wander around. After stumbling around and checking out the library at [Tabakalera](https://maps.app.goo.gl/Lbte78PtfZoGzZ8Z9), I popped into Pokhara for a carajillo. My mom had ordered one at Narru the night before, and we were both disappointed. I ordered my carajillo with rum, and it came with this cinnamon sweet foam on top. Sweet foam isn't usually my thing, but this one really brought out the rum. Impressive soundsystem here too, the bartenders had a great New Wave playlist on while I was there. I made some decent progress with [_Dead Lions_](https://www.goodreads.com/en/book/show/61677576-dead-lions) while I was there, and I left with a delightful buzz.
-  - ![[Attachments/B61597D1-7117-49B1-8589-218F78EC375C_1_102_o.jpeg|center|363]]
+    ![[Attachments/B61597D1-7117-49B1-8589-218F78EC375C_1_102_o.jpeg|center|363]]
 
 # So much left to see...
 
