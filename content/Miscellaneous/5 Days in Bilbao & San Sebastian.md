@@ -1,7 +1,7 @@
 ---
 publish: true
 created: 2026-06-23T08:46:30-07:00
-modified: 2026-06-23T17:09:38-07:00
+modified: 2026-06-23T17:15:22-07:00
 tags:
   - travel
   - spain
@@ -82,6 +82,6 @@ I must add a tearful note here and say I didn't get a chance to have any Basque 
   - My parents went off to the beach so my mom could go surfing, so I had time to wander around. After stumbling around and checking out the library at [Tabakalera](https://maps.app.goo.gl/Lbte78PtfZoGzZ8Z9), I popped into Pokhara for a carajillo. My mom had ordered one at Narru the night before, and we were both disappointed. I ordered my carajillo with rum, and it came with this cinnamon sweet foam on top. Sweet foam isn't usually my thing, but this one really brought out the rum. Impressive soundsystem here too, the bartenders had a great New Wave playlist on while I was there. I made some decent progress with [_Dead Lions_](https://www.goodreads.com/en/book/show/61677576-dead-lions) while I was there, and I left with a delightful buzz.
   - ![[Attachments/B61597D1-7117-49B1-8589-218F78EC375C_1_102_o.jpeg|center|363]]
 
-## So much left to see...
+# So much left to see...
 
 Basque Country left such an impression on me, and I can't wait to return. I spent some time at the [San Telmo Museum](https://maps.app.goo.gl/Bsg48wh87gU9sXiV9) and scratched the surface of how the climate, proximity to the coast and geographical landscape have shaped the region. When popping into a San Sebastian bookstore, the most comprehensive English-language book on Basque history that I found was Mark Kurlansky's [_The Basque History of the World_](https://www.goodreads.com/book/show/350206), published in 1999. I don't know enough about the turbulent, violent era of the 20th century and how the separatist movement is viewed today. (Just an insight: my tour guide did mention that she identifies as a Basque first and would prefer that Basque Country is independent from Spain, if only there were EU support.) All in all, it was such a fascinating place that didn't feel like Spain or France as I understood them. I wouldn't consider it a budget-friendly place, but it's so warm and culturally rich that I'll be back, especially to try that cheesecake.
