@@ -1,7 +1,7 @@
 ---
 publish: true
 created: 2026-07-10T22:15:12-07:00
-modified: 2026-07-10T22:53:00-07:00
+modified: 2026-07-10T22:53:54-07:00
 ---
 
 There was about a 3-month period where I was signed up for Lolo's wine club in Austin. There are ebbs and flows to my wine phases, but ultimately it became too difficult for me, as a single person, to take down 3 bottles of wine a month. (The fact that my layoff + 3-week vacation + subsequent relocation back to SD aligned with another monthly wine club renewal is also semi-relevant.) Chris is categorically not a wine drinker, but he did clock my shit about having a big glass of wine by sending me this [sketch](https://www.tiktok.com/@ithinkyoushouldreels/video/7324406304489950507?is_from_webapp=1\&sender_device=pc) with Patti Harrison from I Think You Should Leave. For some reason, Patti's delivery of "...and popcorn!" has become a dumb little saying that we use whenever I make a bowl of popcorn - which is quite often, actually
@@ -28,5 +28,5 @@ Instructions:
 5. Shake the pan a few times, no need for continuous shaking. I'm not sure if this actually does anything to help dissipate the kernels, but I like to imagine that it allows for any lodged, unpopped kernels to fall to the bottom to the pan.
 6. Keep the pan on the heat until you don't hear a pop for 3-5 seconds. Remove from the heat and pour the popcorn into a bowl.
 7. Add the Lao Gan Ma into the popcorn and stir it up until there's a slight speckle of chili oil on each kernel. There's no way you'll receive a perfect, even coating of Lao Gan Ma on your popcorn unless you use a monstrous amount, so give up that notion.
-   1. Add salt, if you prefer. I've tried the Alton Brown method of seasoning the unpopped kernels in the pan and popping the corn with the salt, but the seasoning didn't stick. In my experience, the salt latches onto the seasoning and nooks and crannies of each popped kernel if you add the salt after popping.
+   1. Add salt, if you prefer. I've tried the [Alton Brown method](https://www.foodnetwork.com/recipes/alton-brown/perfect-popcorn-recipe-1917417) of seasoning the unpopped kernels in the pan and popping the corn with the salt, but the seasoning didn't stick. In my experience, the salt latches onto the seasoning and nooks and crannies of each popped kernel if you add the salt after popping.
 8. Enjoy your popcorn! I'm not going to tell you how to eat it, but I eat my popcorn with a spoon (reuse the Lao Gan Ma spoon here) and one kernel at a time. Remember, this is the afternoon on a workday and we're trying to stretch the time out. Once you near the bottom of the bowl, you can scrape around the bowl and munch on any remaining chili bits. Reward yourself on a job well done by preparing a snack that's marginally healthier than a bag of chips!

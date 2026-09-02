@@ -1,7 +1,9 @@
 ---
 publish: true
 created: 2026-07-22T08:24:24-07:00
-modified: 2026-07-22T09:01:45-07:00
+modified: 2026-09-02T15:01:47-07:00
+tags:
+  - alison-roman
 ---
 
 Recipe from Nothing Fancy by Alison Roman
