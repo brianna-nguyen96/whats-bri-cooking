@@ -1,9 +1,10 @@
 ---
 publish: true
 created: 2026-09-02T14:50:24-07:00
-modified: 2026-09-02T15:40:28-07:00
+modified: 2026-11-15T13:39:19-08:00
 tags:
   - nyt-cooking
+  - viet-food
 ---
 
 Recipe by Eric Kim from NYT Cooking
