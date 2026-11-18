@@ -1,7 +1,7 @@
 ---
 publish: true
 created: 2026-11-15T13:24:35-08:00
-modified: 2026-11-15T14:01:20-08:00
+modified: 2026-11-15T14:12:50-08:00
 tags:
   - nyt-cooking
   - mexican-food
@@ -9,7 +9,7 @@ tags:
 
 Recipe by Paola Briseño-González from NYT Cooking
 ![[Attachments/PXL_20261105_033523507.jpg|center|363]]
-To say that I've been in a cooking rut lately is an understatement. Life and family stuff has gotten in the way, and I've fallen back into freezer meals and scrounging around the pantry for (unsightly) food combinations. The morning of my grandmother's funeral I went to brunch with Chris and his sister. This brunch was mainly to walk through the motions of River-sitting, since they were taking care of him while we went out of town the weekend after. We went to Cocina de Barrio in Encinitas, which I thought was a relatively new location but turns out they've been open for over a year! Things move quickly when you don't live in town for a few years...
+To say that I've been in a cooking rut lately is an understatement. Life and family stuff have gotten in the way, and I've fallen back into freezer meals and scrounging around the pantry for (unsightly) food combinations. The morning of my grandmother's funeral I went to brunch with Chris and his sister. This brunch was mainly to walk through the motions of River-sitting, since they were taking care of him while we went out of town the weekend after. We went to Cocina de Barrio in Encinitas, which I thought was a relatively new location but turns out they've been open for over a year! Things move quickly when you don't live in town for a few years...
 
 Cocina de Barrio had a special for enchiladas Suizas - I'm not usually an enchilada person, but they seemed hearty enough for a dull and dreary day. I did feel stuffed after, but it was almost a comfort for the hours ahead. Two weeks later in a moment of recipe analysis paralysis, I came across this [recipe](https://cooking.nytimes.com/recipes/1027011-enchiladas-suizas-creamy-chicken-enchiladas?smid=share-url) for enchiladas Suizas in NYT Cooking. The recipe was approachable while I still felt the satisfaction of taking on a slightly longer 'project'.
 

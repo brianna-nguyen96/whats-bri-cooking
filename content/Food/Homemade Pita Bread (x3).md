@@ -1,7 +1,7 @@
 ---
 publish: true
 created: 2026-11-18T13:57:11-08:00
-modified: 2026-11-18T14:49:22-08:00
+modified: 2026-11-18T14:53:04-08:00
 tags:
   - nyt-cooking
 ---
@@ -12,7 +12,7 @@ Recipe by David Tanis from NYT Cooking
 
 I'm not much of a baker, I consider it too precise and almost...inorganic of an art compared to cooking any other recipes that I've written about. Of course, this could just be cope, because I'm too lazy to source different various baking ingredients and accoutrements. The ingredients I do have tend to expire because once again, I don't bake. And thus, the cycle continues.
 
-Last week, in an effort to get out of my [[Enchiladas Suizas|funk]], I made the Alison Roman [chickpea Stew](https://www.alisoneroman.com/recipes/spiced-chickpea-stew-with-coconut-and-turmeric/). Its infamy (chana masala ripoff? you be the judge!) is sort of charming to me now, in the post-woke 1.0 era. Anyways, the recipe is easy enough, it's a chickpea and coconut stew that Alison says should be served with pita. Since the stew is simple and mostly involves premade canned ingredients, I figured that attempting homemade pita would be the perfect project. I was only cooking for myself and Chris, but I told myself that Chris would be able to taste it if my meal was _too_ low effort. Obviously I was being delusional, and there were other things on my mind that I needed a distraction from.
+Last week, in an effort to get out of my [[Enchiladas Suizas|funk]], I made the Alison Roman [chickpea Stew](https://www.alisoneroman.com/recipes/spiced-chickpea-stew-with-coconut-and-turmeric/). Its infamy (chana masala ripoff? you be the judge!) is sort of charming to me now, in the post-woke 1.0 era. Anyways, the recipe is easy enough, it's a chickpea and coconut stew that Alison suggests should be served with pita. Since the stew is simple and mostly involves premade canned ingredients, I figured that attempting homemade pita would be the perfect project. The NYT Cooking [recipe](https://cooking.nytimes.com/recipes/1016071-homemade-pita-bread?smid=share-url) from David Tanis has 5 stars and a LOT of puff discourse in the comments, so what else could I ask for? I was only cooking for myself and Chris, but I told myself that Chris would be able to taste it if my meal was _too_ low effort. Obviously I was being delusional, and there were other things on my mind that I needed a distraction from.
 
 Fast forward one week, and I've made this recipe three times. It's great! Unfortunately for me, I've substituted various ingredients based off of pantry availability that I haven't consistently repeated it:
 
