@@ -46,3 +46,26 @@ ul.contains-task-list li {
 li.task-list-item {
   list-style: none;
 }
+
+.explorer .folder-title::before {
+  content: "";
+  display: none;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  image-rendering: pixelated;
+}
+
+.explorer [data-folderpath="Food"] .folder-title::before {
+  display: inline-block;
+  background-image: url("/static/food.png");
+}
+
+.explorer [data-folderpath="Miscellaneous"] .folder-title::before {
+  display: inline-block;
+  background-image: url("/static/misc.png");
+}
