@@ -66,9 +66,19 @@ li.task-list-item {
   background-image: url("/static/food.png");
 }
 
-.explorer [data-folderpath="miscellaneous/index"] .folder-title::before {
+.explorer [data-folderpath="hobbies/index"] .folder-title::before {
   display: inline-block;
-  background-image: url("/static/misc.png");
+  background-image: url("/static/hobbies.png");
+}
+
+.explorer [data-folderpath="hobbies/language-learning/index"] .folder-title::before {
+  display: inline-block;
+  background-image: url("/static/language-learning.png");
+}
+
+.explorer [data-folderpath="travel/index"] .folder-title::before {
+  display: inline-block;
+  background-image: url("/static/travel.png");
 }
 
 /* Bread icons in the heading */
@@ -89,7 +99,17 @@ body[data-slug="food/index"] .article-title::before {
   background-image: url("/static/food.png");
 }
 
-body[data-slug="miscellaneous/index"] .article-title::before {
+body[data-slug="hobbies/index"] .article-title::before {
   display: inline-block;
-  background-image: url("/static/misc.png");
+  background-image: url("/static/hobbies.png");
+}
+
+body[data-slug="hobbies/language-learning/index"] .article-title::before {
+  display: inline-block;
+  background-image: url("/static/language-learning.png");
+}
+
+body[data-slug="travel/index"] .article-title::before {
+  display: inline-block;
+  background-image: url("/static/travel.png");
 }
