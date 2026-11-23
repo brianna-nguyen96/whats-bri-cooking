@@ -299,5 +299,7 @@ export default config
 export const layout = await loadQuartzLayout()
 ```
 
+Only request weights that the selected font provides. For example, Reenie Beanie only has a regular (400) weight, so configure it with `weights: [400]`; requesting 700 from Google Fonts returns a bad request.
+
 > [!tip]
 > For per-heading font control, self-hosted fonts, or Obsidian theme font bridging, see the [[plugins/Fonts|Fonts]] plugin. It can download Google Fonts at build time and serve them locally with `fontOrigin: selfHosted`, making your site fully self-contained.

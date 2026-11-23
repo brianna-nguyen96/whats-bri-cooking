@@ -112,6 +112,14 @@ plugins:
     order: 92
   - source: github:quartz-community/fonts
     enabled: true
+    options:
+      title:
+        name: Reenie Beanie
+        weights: [400]
+      header:
+        name: Schibsted Grotesk
+      body: Schibsted Grotesk
+      code: IBM Plex Mono
   - source: github:quartz-community/remove-draft
     enabled: true
   - source: github:quartz-community/explicit-publish
