@@ -2,7 +2,8 @@
 
 // put your custom CSS here!
 
-body[data-slug="index"] .content-meta {
+body[data-slug="index"] .content-meta,
+body[data-slug$="/index"] .content-meta {
   display: none;
 }
 
