@@ -157,7 +157,7 @@ plugins:
   - source: github:quartz-community/explorer
     enabled: true
     options:
-      title: "What's Inside"
+      title: "Explore"
     layout:
       position: left
       priority: 50

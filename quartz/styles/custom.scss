@@ -24,15 +24,6 @@ img[src$="#center"] {
   visibility: visible !important;
 }
 
-/* Rename explorer sidebar */
-.explorer-title {
-  display: none;
-}
-
-.explorer-title::after {
-  content: "What's Inside";
-  display: block;
-}
 /* Add checkbox input */
 ul.contains-task-list {
   list-style: none;
