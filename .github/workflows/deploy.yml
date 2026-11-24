@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 24
       - run: npm ci
-      - run: npx quartz plugin install --from-config
+      - run: npx quartz plugin install
       - name: Fetch Quartz Theme
         run: curl -s -S https://raw.githubusercontent.com/saberzero1/quartz-themes/master/action.sh | bash -s -- vanilla-palettes.catppuccin-frappe
       - run: npx quartz build
