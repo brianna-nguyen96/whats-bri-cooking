@@ -134,11 +134,16 @@ body[data-slug="hobbies/books/index"] .article-title::before {
   background-image: url("/static/books.png");
 }
 
-/* ── Home page: no left sidebar, graph under the content ── */
+/* ── Home page: no left sidebar, graph on the right ── */
 body[data-slug="index"] .left.sidebar {
   display: none;
 }
 
+body[data-slug="index"] .right.sidebar > :not(.graph) {
+  display: none;
+}
+
+/* Smaller screens: one column, graph under the content */
 body[data-slug="index"] #quartz-body {
   grid-template-columns: minmax(0, 750px);
   grid-template-rows: auto;
@@ -152,24 +157,36 @@ body[data-slug="index"] #quartz-body {
 }
 
 body[data-slug="index"] .right.sidebar {
-  grid-area: grid-sidebar-right;
   position: static;
   height: auto;
   margin: 0;
   padding: 1rem 0;
   flex-direction: column;
+}
 
-  > :not(.graph) {
-    display: none;
+/* Desktop: graph moves to a right-hand column */
+@media all and (min-width: 1200px) {
+  body[data-slug="index"] #quartz-body {
+    grid-template-columns: minmax(0, 750px) 320px;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "grid-header  grid-sidebar-right"
+      "grid-center  grid-sidebar-right"
+      "grid-footer  grid-sidebar-right";
+    column-gap: 2rem;
   }
 
-  .graph {
-    width: 100%;
+  body[data-slug="index"] .right.sidebar {
+    grid-area: grid-sidebar-right;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    padding-top: 6rem;
   }
+}
 
-  .graph > .graph-outer {
-    height: 300px;
-  }
+body[data-slug="index"] .right.sidebar {
+  grid-area: grid-sidebar-right;
 }
 
 /* ── Home page: sticker links ── */
