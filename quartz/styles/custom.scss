@@ -64,6 +64,12 @@ li.task-list-item {
   background-image: url("/static/food.png");
 }
 
+.explorer [data-folderpath="blog/index"] .folder-title::before {
+  display: inline-block;
+  background-image: url("/static/misc.png");
+}
+
+
 .explorer [data-folderpath="hobbies/index"] .folder-title::before {
   display: inline-block;
   background-image: url("/static/hobbies.png");
@@ -101,6 +107,11 @@ li.task-list-item {
 body[data-slug="food/index"] .article-title::before {
   display: inline-block;
   background-image: url("/static/food.png");
+}
+
+body[data-slug="blog/index"] .article-title::before {
+  display: inline-block;
+  background-image: url("/static/misc.png");
 }
 
 body[data-slug="hobbies/index"] .article-title::before {
