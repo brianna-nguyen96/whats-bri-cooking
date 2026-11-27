@@ -122,3 +122,94 @@ body[data-slug="hobbies/books/index"] .article-title::before {
   display: inline-block;
   background-image: url("/static/books.png");
 }
+
+/* ── Home page: no left sidebar, graph under the content ── */
+body[data-slug="index"] .left.sidebar {
+  display: none;
+}
+
+body[data-slug="index"] #quartz-body {
+  grid-template-columns: minmax(0, 750px);
+  grid-template-rows: auto;
+  grid-template-areas:
+    "grid-header"
+    "grid-center"
+    "grid-sidebar-right"
+    "grid-footer";
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+body[data-slug="index"] .right.sidebar {
+  grid-area: grid-sidebar-right;
+  position: static;
+  height: auto;
+  margin: 0;
+  padding: 1rem 0;
+  flex-direction: column;
+
+  > :not(.graph) {
+    display: none;
+  }
+
+  .graph {
+    width: 100%;
+  }
+
+  .graph > .graph-outer {
+    height: 300px;
+  }
+}
+
+/* ── Home page: sticker links ── */
+.stickers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2.5rem;
+  margin: 2rem 0;
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    background: none;
+    transform: rotate(var(--tilt, 0deg)) translateY(var(--drop, 0));
+    transition: transform 0.15s ease;
+  }
+
+  a:hover,
+  a:focus-visible {
+    transform: rotate(0deg) translateY(var(--drop, 0)) scale(1.1);
+  }
+
+  img {
+    width: 130px;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  /* label under each sticker */
+  a::after {
+    font-family: "Reenie Beanie";
+    font-size: 28px;
+    font-weight: 400;
+  }
+
+  p:nth-of-type(1) a { --tilt: -7deg; --drop: 0rem; }
+  p:nth-of-type(2) a { --tilt: 5deg; --drop: 1.75rem; }
+  p:nth-of-type(3) a { --tilt: -4deg; --drop: 0.25rem; }
+  p:nth-of-type(4) a { --tilt: 8deg; --drop: 1.5rem; }
+
+  p:nth-of-type(1) a::after { content: "blog"; }
+  p:nth-of-type(2) a::after { content: "food"; }
+  p:nth-of-type(3) a::after { content: "hobbies"; }
+  p:nth-of-type(4) a::after { content: "travel"; }
+}
+
