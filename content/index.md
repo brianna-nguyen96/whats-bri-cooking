@@ -5,7 +5,7 @@ created: 2026-06-21T19:36:32-07:00
 modified: 2026-11-27T09:39:00-08:00
 ---
 
-notes on completed recipes, travel & general musings
+welcome to my personal site! notes on completed recipes, travel & general musings
 
 <div class="stickers">
 
